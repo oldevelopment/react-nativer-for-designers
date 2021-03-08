@@ -1,21 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+
+import allReducers from "./Redux/reducers/reducers";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+const myStore = createStore(allReducers);
+import { StatusBar } from "expo-status-bar";
+import AppNavigator from "./navigator/AppNavigator";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: "https://graphql.contentful.com/content/v1/spaces/yk83xashtump",
+  credentials: "same-origin",
+  headers: {
+    Authorization: `Bearer lRWeme1lzT5dbssBx0_IH9Z6vF0-0guflEslRcFsjL0`,
+  },
+});
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ApolloProvider client={client}>
+      <Provider store={myStore}>
+        <AppNavigator />
+        <StatusBar backgroundColor="#f0f3f5" />
+      </Provider>
+    </ApolloProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
