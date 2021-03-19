@@ -20,6 +20,7 @@ import Avatar from "../components/Avatar";
 import axios from "axios";
 import { useQuery } from "@apollo/client";
 import Spinner from "react-native-loading-spinner-overlay";
+
 const Home = () => {
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
   const { loading: LogoLoading, data: LogoData } = useQuery(LogoQuery);

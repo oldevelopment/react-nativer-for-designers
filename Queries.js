@@ -94,3 +94,21 @@ export const LogoQuery = gql`
     }
   }
 `;
+
+export const ProjectQuery = `
+{
+  projectsCollection {
+    items {
+     image {
+       title
+       description
+       contentType
+       fileName
+       size
+       url
+       width
+       height
+     }
+    }
+  }
+}`;

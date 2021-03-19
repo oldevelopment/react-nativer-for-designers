@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { Linking, TouchableOpacity } from "react-native";
-import { WebView } from "react-native-webview";
+import { TouchableOpacity } from "react-native";
+
 import Markdown from "react-native-showdown";
 
 import styled from "styled-components";
@@ -12,7 +12,6 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const Section = ({ route, handleTabbarVisibility }) => {
   const navigation = useNavigation();
-  const webviewRef = useRef(null);
 
   const EnablehandleTabbarVisibility = () => {
     handleTabbarVisibility(true);
@@ -71,10 +70,6 @@ const Content = styled.View`
   background: #f0f3f5;
   padding: 20px;
   height: 850px;
-`;
-const htmlContent = `
-  <h2>This is a title <a href="https://www.facebook.com/hewr.srood/">Facbook</a> </h2>
-  <p>This is a paragraph</p>
 `;
 
 const htmlStyle = `
