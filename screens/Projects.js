@@ -44,7 +44,7 @@ const Projects = () => {
       }),
       onPanResponderRelease: () => {
         const positionY = pan.y;
-        console.log(positionY > 200);
+
         if (positionY._value > 200) {
           Animated.timing(pan, {
             toValue: { x: 0, y: 1000 },
@@ -102,6 +102,7 @@ const Projects = () => {
           author={projects[index].author}
           image={projects[index].image}
           text={projects[index].text}
+          shouldOpen={true}
         />
       </Animated.View>
       <Animated.View
@@ -122,6 +123,7 @@ const Projects = () => {
           author={projects[nextIndex(index)].author}
           image={projects[nextIndex(index)].image}
           text={projects[nextIndex(index)].text}
+          shouldOpen={false}
         />
       </Animated.View>
       <Animated.View
@@ -142,6 +144,7 @@ const Projects = () => {
           author={projects[nextIndex(index + 1)].author}
           image={projects[nextIndex(index + 1)].image}
           text={projects[nextIndex(index + 1)].text}
+          shouldOpen={false}
         />
       </Animated.View>
     </Container>
