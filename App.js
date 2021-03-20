@@ -4,9 +4,11 @@ import allReducers from "./Redux/reducers/reducers";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 const myStore = createStore(allReducers);
-import { StatusBar } from "expo-status-bar";
+
 import AppNavigator from "./navigator/AppNavigator";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { StatusBar } from "react-native";
+// import { StatusBar } from "expo-status-bar";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -18,11 +20,12 @@ const client = new ApolloClient({
 });
 
 export default function App() {
+  StatusBar.setBackgroundColor("#f0f3f5");
   return (
     <ApolloProvider client={client}>
       <Provider store={myStore}>
+        <StatusBar barStyle="dark-content" />
         <AppNavigator />
-        <StatusBar backgroundColor="#f0f3f5" />
       </Provider>
     </ApolloProvider>
   );

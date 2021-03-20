@@ -4,7 +4,10 @@ import {
   Animated,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
+
 import styled from "styled-components";
 import * as Icon from "@expo/vector-icons";
 
@@ -45,26 +48,32 @@ const Project = ({ image, title, author, text, shouldOpen }) => {
   };
   return (
     <>
-      <TouchableWithoutFeedback onPress={openCard}>
-        <AnimatedContainer
-          style={{ width: cardWidth, height: cardHeight, elevation: 10 }}
-        >
-          <Cover>
-            <Image source={image} />
-            <Title>{title}</Title>
-            <Author>{author}</Author>
-          </Cover>
-          <Text>{text}</Text>
-          <TouchableOpacity
-            style={{ position: "absolute", top: 20, right: 20 }}
-            onPress={closeCard}
+      <SafeAreaView style={{ paddingTop: StatusBar.currentHeight }}>
+        <TouchableWithoutFeedback onPress={openCard}>
+          <AnimatedContainer
+            style={{ width: cardWidth, height: cardHeight, elevation: 10 }}
           >
-            <AnimatedCloseView style={{ opacity: opacity }}>
-              <Icon.Ionicons name="ios-close" size={32} color="#546bfb" />
+            <Cover>
+              <Image source={image} />
+              <Title>{title}</Title>
+              <Author>{author}</Author>
+            </Cover>
+            <Text>{text}</Text>
+            <AnimatedCloseView
+              style={{
+                opacity: opacity,
+                position: "absolute",
+                top: 20,
+                right: 20,
+              }}
+            >
+              <TouchableOpacity onPress={closeCard}>
+                <Icon.Ionicons name="ios-close" size={32} color="#546bfb" />
+              </TouchableOpacity>
             </AnimatedCloseView>
-          </TouchableOpacity>
-        </AnimatedContainer>
-      </TouchableWithoutFeedback>
+          </AnimatedContainer>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
     </>
   );
 };

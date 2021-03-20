@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 
 import Markdown from "react-native-showdown";
@@ -12,7 +12,6 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const Section = ({ route, handleTabbarVisibility }) => {
   const navigation = useNavigation();
-
   const EnablehandleTabbarVisibility = () => {
     handleTabbarVisibility(true);
   };
@@ -24,7 +23,7 @@ const Section = ({ route, handleTabbarVisibility }) => {
   const sectionData = route.params.section;
   return (
     <ScrollView>
-      <Container style={{ marginTop: 30 }}>
+      <Container>
         <Cover>
           <Image source={{ uri: sectionData.image.url }} />
           <Wrapper>
@@ -81,6 +80,7 @@ const htmlStyle = `
     line-height:240px
     margin:0;
     padding:0;
+    user-select: none;
   }
   body{
     background-color:#f0f3f5;
