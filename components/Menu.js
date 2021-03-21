@@ -33,13 +33,6 @@ const Menu = ({ userName }) => {
     }).start();
   };
 
-  const firstClose = () => {
-    Animated.spring(fadeAnim, {
-      toValue: vh(110),
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
   const handleMenu = () => {
     if (menuState == "openMenu") {
       fadeIn();
