@@ -16,9 +16,9 @@ const menItems = [
 
 const Menu = ({ userName }) => {
   const dispatch = useDispatch();
-  const isOpened = useSelector((state) => state.isOpened);
+  const menuState = useSelector((state) => state.isOpened);
+  const fadeAnim = useRef(new Animated.Value(vh(110))).current;
 
-  const fadeAnim = useRef(new Animated.Value(100)).current;
   const fadeIn = () => {
     Animated.spring(fadeAnim, {
       toValue: vh(10),
@@ -32,9 +32,24 @@ const Menu = ({ userName }) => {
       useNativeDriver: false,
     }).start();
   };
+
+  const firstClose = () => {
+    Animated.spring(fadeAnim, {
+      toValue: vh(110),
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+  const handleMenu = () => {
+    if (menuState == "openMenu") {
+      fadeIn();
+    } else if (menuState == "closeMenu") {
+      fadeOut();
+    }
+  };
   useEffect(() => {
-    isOpened ? fadeIn() : fadeOut();
-  }, [isOpened]);
+    handleMenu();
+  }, [menuState]);
 
   return (
     <AnimatedContainer style={{ top: fadeAnim }}>

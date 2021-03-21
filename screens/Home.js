@@ -25,7 +25,6 @@ const Home = () => {
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
   const { loading: LogoLoading, data: LogoData } = useQuery(LogoQuery);
   const { loading: CourseLoading, data: CourseData } = useQuery(CourseQuery);
-
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("User");
