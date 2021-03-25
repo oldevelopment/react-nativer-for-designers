@@ -46,21 +46,6 @@ export default function TabNavigator() {
   return (
     <Navigator>
       <Screen
-        name="projects"
-        component={Projects}
-        options={{
-          tabBarLabel: "Projects",
-          tabBarVisible: tabbarvisibility,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name="ios-folder"
-              size={26}
-              color={focused ? "#4775f2" : "#b8bece"}
-            />
-          ),
-        }}
-      />
-      <Screen
         name="home"
         options={{
           tabBarLabel: "Home",
@@ -91,6 +76,21 @@ export default function TabNavigator() {
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="ios-albums"
+              size={26}
+              color={focused ? "#4775f2" : "#b8bece"}
+            />
+          ),
+        }}
+      />
+      <Screen
+        name="projects"
+        component={Projects}
+        options={{
+          tabBarLabel: "Projects",
+          tabBarVisible: tabbarvisibility,
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name="ios-folder"
               size={26}
               color={focused ? "#4775f2" : "#b8bece"}
             />
