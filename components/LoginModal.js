@@ -2,43 +2,76 @@ import React, { useState, useEffect } from "react";
 import { vh, vw } from "react-native-expo-viewport-units";
 import styled from "styled-components/native";
 import * as Icon from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import { BlurView } from "expo-blur";
 
 const LoginModal = () => {
   const [shownPassowrd, setShownPassowrd] = useState(false);
   const [email, setEmail] = useState("");
   const [passowrd, setPassowrd] = useState("");
+  const [emailUrl, setEmailUrl] = useState(require("../assets/icon-email.png"));
+  const [passwordUrl, setPasswordUrl] = useState(
+    require("../assets/icon-password.png")
+  );
+
+  const focusPassowrd = () => {
+    setPasswordUrl(require("../assets/icon-password-animated.gif"));
+    setEmailUrl(require("../assets/icon-email.png"));
+  };
+  const focusEmail = () => {
+    setPasswordUrl(require("../assets/icon-password.png"));
+    setEmailUrl(require("../assets/icon-email-animated.gif"));
+  };
+
   const logg = () => {
     console.log(email, passowrd);
   };
+
+  const tabBackground = () => {
+    Keyboard.dismiss();
+  };
   return (
     <Container>
+      <TouchableWithoutFeedback onPress={tabBackground}>
+        <BlurView
+          tint="default"
+          intensity={100}
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+          }}
+        />
+      </TouchableWithoutFeedback>
       <Modal style={{ elevation: 15 }}>
         <Logo source={require("../assets/logo-dc.png")} />
         <Text>Hehehehe you can login now</Text>
         <InputWrappr>
-          <IconContainer
-            style={{ width: 24, height: 16 }}
-            source={require("../assets/icon-email.png")}
-          />
+          <IconContainer style={{ width: 24, height: 16 }} source={emailUrl} />
           <TextInput
             placeholder="Email"
             keyboardType="email-address"
             onChangeText={(email) => setEmail(email)}
             value={email}
+            onFocus={focusEmail}
           />
         </InputWrappr>
 
         <InputWrappr>
           <IconContainer
-            style={{ width: 16, height: 24 }}
-            source={require("../assets/icon-password.png")}
+            style={{ width: 18, height: 24 }}
+            source={passwordUrl}
           />
           <TextInput
             placeholder="Password"
             secureTextEntry={!shownPassowrd}
             onChangeText={(passowrd) => setPassowrd(passowrd)}
             value={passowrd}
+            onFocus={focusPassowrd}
           />
           <Icon.Ionicons
             onPress={() => setShownPassowrd((state) => !state)}
