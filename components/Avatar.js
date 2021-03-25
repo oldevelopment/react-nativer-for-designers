@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React from "react";
+import styled from "styled-components/native";
 
 const Avatar = ({ userPic }) => <Image source={{ uri: userPic }} />;
 export default Avatar;

@@ -7,29 +7,42 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
+// import { LinearGradient } from "expo";
 
-import styled from "styled-components";
+import styled from "styled-components/native";
 import * as Icon from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { useDispatch } from "react-redux";
+import { disableGesture, enableGesture } from "../Redux/actions/actions";
 
 const Project = ({ image, title, author, text, shouldOpen }) => {
+  const dispatch = useDispatch();
   const cardWidth = useRef(new Animated.Value(vw(80))).current;
   const cardHeight = useRef(new Animated.Value(vh(60))).current;
   const opacity = useRef(new Animated.Value(0)).current;
+  const textHeight = useRef(new Animated.Value(100)).current;
+
   const openCard = () => {
-    if (shouldOpen) {
-      Animated.spring(cardWidth, {
-        toValue: vw(100),
-        useNativeDriver: false,
-      }).start();
-      Animated.spring(cardHeight, {
-        toValue: vh(100),
-        useNativeDriver: false,
-      }).start();
-      Animated.timing(opacity, {
-        toValue: 1,
-        useNativeDriver: false,
-      }).start();
-    }
+    if (!shouldOpen) return;
+    Animated.spring(cardWidth, {
+      toValue: vw(100),
+      useNativeDriver: false,
+    }).start();
+
+    Animated.spring(cardHeight, {
+      toValue: vh(100),
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(opacity, {
+      toValue: 1,
+      useNativeDriver: false,
+    }).start();
+
+    Animated.spring(textHeight, {
+      toValue: 1000,
+      useNativeDriver: false,
+    }).start();
+    dispatch(disableGesture());
   };
 
   const closeCard = () => {
@@ -45,11 +58,20 @@ const Project = ({ image, title, author, text, shouldOpen }) => {
       toValue: 0,
       useNativeDriver: false,
     }).start();
+    Animated.spring(textHeight, {
+      toValue: 100,
+      useNativeDriver: false,
+    }).start();
+    dispatch(enableGesture());
   };
   return (
     <>
       <SafeAreaView style={{ paddingTop: StatusBar.currentHeight }}>
-        <TouchableWithoutFeedback onPress={openCard}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            openCard();
+          }}
+        >
           <AnimatedContainer
             style={{ width: cardWidth, height: cardHeight, elevation: 10 }}
           >
@@ -58,7 +80,16 @@ const Project = ({ image, title, author, text, shouldOpen }) => {
               <Title>{title}</Title>
               <Author>{author}</Author>
             </Cover>
-            <Text>{text}</Text>
+            <AnimatedText style={{ height: textHeight }}>{text}</AnimatedText>
+            <AnimatedLinearGradientWrapper style={{ height: textHeight }}>
+              <LinearGradient
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                colors={["rgba(255,255,255, 0)", "rgba(255,255,255, 1)"]}
+              />
+            </AnimatedLinearGradientWrapper>
             <AnimatedCloseView
               style={{
                 opacity: opacity,
@@ -83,8 +114,18 @@ const Container = styled.View`
   border-radius: 15px;
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
 `;
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
+const GradientWrapper = styled.View`
+  border-radius: 15px;
+  position: absolute;
+  top: ${vh(45)}px;
+  width: 100%;
+`;
+const AnimatedLinearGradientWrapper = Animated.createAnimatedComponent(
+  GradientWrapper
+);
 
 const Cover = styled.View`
   height: ${vh(40)}px;
@@ -104,7 +145,6 @@ const CloseView = styled.View`
 const AnimatedCloseView = Animated.createAnimatedComponent(CloseView);
 const Image = styled.Image`
   width: 100%;
-
   height: ${vh(45)}px;
 `;
 const Title = styled.Text`
@@ -131,4 +171,6 @@ const Text = styled.Text`
   line-height: 24px;
   color: #3c4560;
 `;
+const AnimatedText = Animated.createAnimatedComponent(Text);
+
 export default Project;

@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Animated, PanResponder } from "react-native";
+import { useSelector } from "react-redux";
+import { vh } from "react-native-expo-viewport-units";
 
-import styled from "styled-components";
+import styled from "styled-components/native";
 import Project from "../components/Project";
 const Projects = () => {
   const [index, setIndex] = useState(0);
@@ -10,7 +12,8 @@ const Projects = () => {
   const translateY = useRef(new Animated.Value(44)).current;
   const thirdScale = useRef(new Animated.Value(0.8)).current;
   const thirdTranslateY = useRef(new Animated.Value(-50)).current;
-
+  const opacity = useRef(new Animated.Value(0)).current;
+  const gesture = useSelector((state) => state.isGestureEnabled);
   const nextIndex = (index) => {
     if (index >= projects.length - 1) {
       return 0;
@@ -18,84 +21,96 @@ const Projects = () => {
       return index + 1;
     }
   };
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
+  const resp = PanResponder.create({
+    onMoveShouldSetPanResponder: (e, gestureState) => {
+      return (gestureState.dx === 0 && gestureState.dy === 0) ||
+        gesture === "disableGesture"
+        ? false
+        : true;
+    },
+    onPanResponderGrant: () => {
+      Animated.spring(scale, {
+        toValue: 1,
+        useNativeDriver: false,
+      }).start();
+      Animated.spring(translateY, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
+      Animated.spring(thirdScale, {
+        toValue: 0.9,
+        useNativeDriver: false,
+      }).start();
+      Animated.spring(thirdTranslateY, {
+        toValue: 44,
+        useNativeDriver: false,
+      }).start();
+      Animated.timing(opacity, {
+        toValue: 1,
+        useNativeDriver: false,
+      }).start();
+    },
 
-      onPanResponderGrant: () => {
-        Animated.spring(scale, { toValue: 1, useNativeDriver: false }).start();
-        Animated.spring(translateY, {
-          toValue: 0,
+    onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
+      useNativeDriver: false,
+    }),
+    onPanResponderRelease: () => {
+      const positionY = pan.y;
+      Animated.timing(opacity, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
+      if (positionY._value > 200) {
+        Animated.timing(pan, {
+          toValue: { x: 0, y: 1000 },
+          useNativeDriver: false,
+        }).start(() => {
+          pan.setValue({ x: 0, y: 0 });
+          scale.setValue(0.9);
+          translateY.setValue(44);
+          thirdScale.setValue(0.8);
+          thirdTranslateY.setValue(-50);
+          setIndex((index) => nextIndex(index));
+        });
+      } else {
+        Animated.spring(pan, {
+          toValue: {
+            x: 0,
+            y: 0,
+          },
           useNativeDriver: false,
         }).start();
 
-        Animated.spring(thirdScale, {
+        // second card
+        Animated.spring(scale, {
           toValue: 0.9,
           useNativeDriver: false,
         }).start();
-        Animated.spring(thirdTranslateY, {
+        Animated.spring(translateY, {
           toValue: 44,
           useNativeDriver: false,
         }).start();
-      },
 
-      onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
-        useNativeDriver: false,
-      }),
-      onPanResponderRelease: () => {
-        const positionY = pan.y;
-
-        if (positionY._value > 200) {
-          Animated.timing(pan, {
-            toValue: { x: 0, y: 1000 },
-            useNativeDriver: false,
-          }).start(() => {
-            pan.setValue({ x: 0, y: 0 });
-            scale.setValue(0.9);
-            translateY.setValue(44);
-            thirdScale.setValue(0.8);
-            thirdTranslateY.setValue(-50);
-            setIndex((index) => nextIndex(index));
-          });
-        } else {
-          Animated.spring(pan, {
-            toValue: {
-              x: 0,
-              y: 0,
-            },
-            useNativeDriver: false,
-          }).start();
-
-          // second card
-          Animated.spring(scale, {
-            toValue: 0.9,
-            useNativeDriver: false,
-          }).start();
-          Animated.spring(translateY, {
-            toValue: 44,
-            useNativeDriver: false,
-          }).start();
-
-          // Third Card
-          Animated.spring(thirdScale, {
-            toValue: 0.8,
-            useNativeDriver: false,
-          }).start();
-          Animated.spring(thirdTranslateY, {
-            toValue: -50,
-            useNativeDriver: false,
-          }).start();
-        }
-      },
-    })
-  ).current;
+        // Third Card
+        Animated.spring(thirdScale, {
+          toValue: 0.8,
+          useNativeDriver: false,
+        }).start();
+        Animated.spring(thirdTranslateY, {
+          toValue: -50,
+          useNativeDriver: false,
+        }).start();
+      }
+    },
+  });
   return (
     <Container style={{ marginTop: 30 }}>
+      <AnimatedMask style={{ opacity: opacity }} />
       <Animated.View
         style={{
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
-        {...panResponder.panHandlers}
+        {...resp.panHandlers}
       >
         <Project
           title={projects[index].title}
@@ -158,7 +173,7 @@ const projects = [
     image: require("../assets/background5.jpg"),
     author: "Liu Yi",
     text:
-      "Thanks to Design+Code, I improved my design skill and learned to do animations for my app Price Tag, a top news app in China.",
+      "Thanks to Design+Code, I improved my design skill and learned to do animations for my app Price Tag, a top news app in China. Thanks to Design+Code, I improved my design skill and learned to do animations for my app Price Tag, a top news app in China.",
   },
   {
     title: "The DM App - Ananoumous Chat",
@@ -181,3 +196,15 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
 `;
+const Mask = styled.View`
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  top: -30px;
+  left: 0;
+  width: 100%;
+  height: ${vh(100)}px;
+
+  z-index: -3;
+`;
+
+const AnimatedMask = Animated.createAnimatedComponent(Mask);

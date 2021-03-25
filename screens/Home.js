@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import Card from "./../components/Card";
 import Logo from "./../components/Logo";
 import { NotificationIcon } from "./../components/Icons";

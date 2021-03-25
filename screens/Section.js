@@ -3,7 +3,7 @@ import { TouchableOpacity } from "react-native";
 
 import Markdown from "react-native-showdown";
 
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { vh } from "react-native-expo-viewport-units";
 import * as Icon from "@expo/vector-icons";
 
