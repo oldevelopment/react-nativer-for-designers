@@ -6,20 +6,21 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import styled from "styled-components/native";
-import Card from "./../components/Card";
-import Logo from "./../components/Logo";
-import { NotificationIcon } from "./../components/Icons";
-import Course from "./../components/Course";
-import Menu from "./../components/Menu";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { openMenu } from "../Redux/actions/actions";
 import { CardsQuery, CourseQuery, LogoQuery } from "../Queries";
+import { NotificationIcon } from "./../components/Icons";
+import { useQuery } from "@apollo/client";
+import styled from "styled-components/native";
+import Card from "./../components/Card";
+import Logo from "./../components/Logo";
+import Course from "./../components/Course";
+import Menu from "./../components/Menu";
 import Avatar from "../components/Avatar";
 import axios from "axios";
-import { useQuery } from "@apollo/client";
 import Spinner from "react-native-loading-spinner-overlay";
+import LoginModal from "../components/LoginModal";
 
 const Home = () => {
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
@@ -45,88 +46,91 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
-      <Spinner
-        textStyle={{ color: "skyblue" }}
-        visible={CardLoading && LogoLoading && CourseLoading}
-        textContent={"Loading..."}
-        customIndicator={<ActivityIndicator size="large" color="skyblue" />}
-      />
-      <Menu userName={userName} />
-      <SafeAreaView>
-        <ScrollView style={{ height: "100%" }}>
-          <TitleBar>
-            <TouchableOpacity onPress={() => dispatch(openMenu())}>
-              <Avatar userPic={userPic} />
-            </TouchableOpacity>
-            <View>
-              <Title>Welcome back,</Title>
-              <Name>{userName}</Name>
-            </View>
-            <NotificationIcon
-              style={{ position: "absolute", right: 20, top: 5 }}
-            />
-          </TitleBar>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{
-              paddingTop: 20,
-              paddingBottom: 20,
-              height: 110,
-            }}
-          >
-            {LogoData &&
-              LogoData.logoCollection.items.map(({ logo, name }, index) => (
-                <Logo key={`${name}-${index}`} image={logo.url} name={name} />
-              ))}
-          </ScrollView>
-          <Subtitle>Continue learning</Subtitle>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ paddingBottom: 10, height: 350 }}
-          >
-            {CardData &&
-              CardData.cardCollection.items.map((card, i) => (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("section", { section: card })
-                  }
-                  key={`${i}${card.title}`}
-                >
-                  <Card
-                    coverImg={card.image.url}
-                    title={card.title}
-                    logo={card.logo.url}
-                    caption={card.caption}
-                    subtitle={card.subTitle}
+    <>
+      <Container>
+        <Spinner
+          textStyle={{ color: "skyblue" }}
+          visible={CardLoading && LogoLoading && CourseLoading}
+          textContent={"Loading..."}
+          customIndicator={<ActivityIndicator size="large" color="skyblue" />}
+        />
+        <Menu userName={userName} />
+        <SafeAreaView>
+          <ScrollView style={{ height: "100%" }}>
+            <TitleBar>
+              <TouchableOpacity onPress={() => dispatch(openMenu())}>
+                <Avatar userPic={userPic} />
+              </TouchableOpacity>
+              <View>
+                <Title>Welcome back,</Title>
+                <Name>{userName}</Name>
+              </View>
+              <NotificationIcon
+                style={{ position: "absolute", right: 20, top: 5 }}
+              />
+            </TitleBar>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{
+                paddingTop: 20,
+                paddingBottom: 20,
+                height: 110,
+              }}
+            >
+              {LogoData &&
+                LogoData.logoCollection.items.map(({ logo, name }, index) => (
+                  <Logo key={`${name}-${index}`} image={logo.url} name={name} />
+                ))}
+            </ScrollView>
+            <Subtitle>Continue learning</Subtitle>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{ paddingBottom: 10, height: 350 }}
+            >
+              {CardData &&
+                CardData.cardCollection.items.map((card, i) => (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("section", { section: card })
+                    }
+                    key={`${i}${card.title}`}
+                  >
+                    <Card
+                      coverImg={card.image.url}
+                      title={card.title}
+                      logo={card.logo.url}
+                      caption={card.caption}
+                      subtitle={card.subTitle}
+                    />
+                  </TouchableOpacity>
+                ))}
+            </ScrollView>
+            <Subtitle>Popular Courses</Subtitle>
+            {CourseData &&
+              CourseData.courseCollection.items.map(
+                (
+                  { title, subTitle, image, logo, author, avatar, caption },
+                  i
+                ) => (
+                  <Course
+                    key={`${i}-${title}`}
+                    title={title}
+                    subtitle={subTitle}
+                    author={author}
+                    image={image.url}
+                    logo={logo.url}
+                    avatar={avatar.url}
+                    caption={caption}
                   />
-                </TouchableOpacity>
-              ))}
+                )
+              )}
           </ScrollView>
-          <Subtitle>Popular Courses</Subtitle>
-          {CourseData &&
-            CourseData.courseCollection.items.map(
-              (
-                { title, subTitle, image, logo, author, avatar, caption },
-                i
-              ) => (
-                <Course
-                  key={`${i}-${title}`}
-                  title={title}
-                  subtitle={subTitle}
-                  author={author}
-                  image={image.url}
-                  logo={logo.url}
-                  avatar={avatar.url}
-                  caption={caption}
-                />
-              )
-            )}
-        </ScrollView>
-      </SafeAreaView>
-    </Container>
+        </SafeAreaView>
+      </Container>
+      <LoginModal />
+    </>
   );
 };
 export default Home;
