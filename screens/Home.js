@@ -48,12 +48,12 @@ const Home = () => {
   return (
     <>
       <Container>
-        <Spinner
+        {/* <Spinner
           textStyle={{ color: "skyblue" }}
           visible={CardLoading && LogoLoading && CourseLoading}
           textContent={"Loading..."}
           customIndicator={<ActivityIndicator size="large" color="skyblue" />}
-        />
+        /> */}
         <Menu userName={userName} />
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>

@@ -8,6 +8,8 @@ import {
   Keyboard,
 } from "react-native";
 import { BlurView } from "expo-blur";
+import Success from "./Success";
+import Loading from "./Loading";
 
 const LoginModal = () => {
   const [shownPassowrd, setShownPassowrd] = useState(false);
@@ -17,6 +19,8 @@ const LoginModal = () => {
   const [passwordUrl, setPasswordUrl] = useState(
     require("../assets/icon-password.png")
   );
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const focusPassowrd = () => {
     setPasswordUrl(require("../assets/icon-password-animated.gif"));
@@ -27,67 +31,80 @@ const LoginModal = () => {
     setEmailUrl(require("../assets/icon-email-animated.gif"));
   };
 
-  const logg = () => {
+  const handleLogin = () => {
     console.log(email, passowrd);
+    setIsLoading(() => true);
+    setTimeout(() => {
+      setIsLoading(() => false);
+      setIsSuccessful(() => true);
+    }, 2000);
   };
 
   const tabBackground = () => {
     Keyboard.dismiss();
   };
   return (
-    <Container>
-      <TouchableWithoutFeedback onPress={tabBackground}>
-        <BlurView
-          tint="default"
-          intensity={100}
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </TouchableWithoutFeedback>
-      <Modal style={{ elevation: 15 }}>
-        <Logo source={require("../assets/logo-dc.png")} />
-        <Text>Hehehehe you can login now</Text>
-        <InputWrappr>
-          <IconContainer style={{ width: 24, height: 16 }} source={emailUrl} />
-          <TextInput
-            placeholder="Email"
-            keyboardType="email-address"
-            onChangeText={(email) => setEmail(email)}
-            value={email}
-            onFocus={focusEmail}
+    <>
+      <Container>
+        <TouchableWithoutFeedback onPress={tabBackground}>
+          <BlurView
+            tint="default"
+            intensity={100}
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+            }}
           />
-        </InputWrappr>
+        </TouchableWithoutFeedback>
+        <Modal style={{ elevation: 15 }}>
+          <Logo source={require("../assets/logo-dc.png")} />
+          <Text>Hehehehe you can login now</Text>
+          <InputWrappr>
+            <IconContainer
+              style={{ width: 24, height: 16 }}
+              source={emailUrl}
+            />
+            <TextInput
+              placeholder="Email"
+              keyboardType="email-address"
+              onChangeText={(email) => setEmail(email)}
+              value={email}
+              onFocus={focusEmail}
+            />
+          </InputWrappr>
 
-        <InputWrappr>
-          <IconContainer
-            style={{ width: 18, height: 24 }}
-            source={passwordUrl}
-          />
-          <TextInput
-            placeholder="Password"
-            secureTextEntry={!shownPassowrd}
-            onChangeText={(passowrd) => setPassowrd(passowrd)}
-            value={passowrd}
-            onFocus={focusPassowrd}
-          />
-          <Icon.Ionicons
-            onPress={() => setShownPassowrd((state) => !state)}
-            name={`${shownPassowrd ? "eye" : "eye-off"}`}
-            size={25}
-            style={{ marginRight: 5 }}
-            color={`${shownPassowrd ? "#546bfb" : "#b8bece"}`}
-          />
-        </InputWrappr>
-        <TouchableOpacity onPress={() => logg()}>
-          <Button style={{ elevation: 10 }}>
-            <ButtonText>Login</ButtonText>
-          </Button>
-        </TouchableOpacity>
-      </Modal>
-    </Container>
+          <InputWrappr>
+            <IconContainer
+              style={{ width: 18, height: 24 }}
+              source={passwordUrl}
+            />
+            <TextInput
+              placeholder="Password"
+              secureTextEntry={!shownPassowrd}
+              onChangeText={(passowrd) => setPassowrd(passowrd)}
+              value={passowrd}
+              onFocus={focusPassowrd}
+            />
+            <Icon.Ionicons
+              onPress={() => setShownPassowrd((state) => !state)}
+              name={`${shownPassowrd ? "eye" : "eye-off"}`}
+              size={25}
+              style={{ marginRight: 5 }}
+              color={`${shownPassowrd ? "#546bfb" : "#b8bece"}`}
+            />
+          </InputWrappr>
+          <TouchableOpacity onPress={() => handleLogin()}>
+            <Button style={{ elevation: 10 }}>
+              <ButtonText>Login</ButtonText>
+            </Button>
+          </TouchableOpacity>
+        </Modal>
+      </Container>
+
+      <Success isActive={isSuccessful} />
+      <Loading isActive={isLoading} />
+    </>
   );
 };
 
