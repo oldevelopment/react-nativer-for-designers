@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import LottieView from "lottie-react-native";
 import { Animated } from "react-native";
 import { vh, vw } from "react-native-expo-viewport-units";

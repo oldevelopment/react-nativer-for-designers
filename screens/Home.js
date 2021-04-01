@@ -6,9 +6,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { openMenu } from "../Redux/actions/actions";
+import { openMenu, openModal } from "../Redux/actions/actions";
+
 import { CardsQuery, CourseQuery, LogoQuery } from "../Queries";
 import { NotificationIcon } from "./../components/Icons";
 import { useQuery } from "@apollo/client";
@@ -23,6 +24,8 @@ import Spinner from "react-native-loading-spinner-overlay";
 import LoginModal from "../components/LoginModal";
 
 const Home = () => {
+  const modalReducer = useSelector((state) => state.modalReducer);
+
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
   const { loading: LogoLoading, data: LogoData } = useQuery(LogoQuery);
   const { loading: CourseLoading, data: CourseData } = useQuery(CourseQuery);
@@ -32,6 +35,10 @@ const Home = () => {
   const [userPic, setUserPic] = useState(
     "https://source.unsplash.com/500x500/?face"
   );
+  const openLogin = () => {
+    // console.log(modalReducer);
+    dispatch(openModal());
+  };
   const fetchData = async () => {
     try {
       const result = await axios.get("https://randomuser.me/api/");
@@ -58,7 +65,7 @@ const Home = () => {
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>
             <TitleBar>
-              <TouchableOpacity onPress={() => dispatch(openMenu())}>
+              <TouchableOpacity onPress={openLogin}>
                 <Avatar userPic={userPic} />
               </TouchableOpacity>
               <View>

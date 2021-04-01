@@ -1,4 +1,4 @@
-const opnenedMenuReducer = (state = false, action) => {
+const opnenedMenuReducer = (state = "closeMenu", action) => {
   switch (action.type) {
     case "openMenu":
       return "openMenu";

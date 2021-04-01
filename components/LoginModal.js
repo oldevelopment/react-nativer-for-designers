@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { vh, vw } from "react-native-expo-viewport-units";
 import styled from "styled-components/native";
 import * as Icon from "@expo/vector-icons";
@@ -6,19 +6,31 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
+  Animated,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import Success from "./Success";
 import Loading from "./Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { openMenu, closeModal } from "../Redux/actions/actions";
 
 const LoginModal = () => {
   const [shownPassowrd, setShownPassowrd] = useState(false);
   const [email, setEmail] = useState("");
   const [passowrd, setPassowrd] = useState("");
   const [emailUrl, setEmailUrl] = useState(require("../assets/icon-email.png"));
+  const top = useRef(new Animated.Value(vh(100))).current;
+  const scale = useRef(new Animated.Value(1.3)).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  const modalReducer = useSelector((state) => state.modalReducer);
+  const dispatch = useDispatch();
+
   const [passwordUrl, setPasswordUrl] = useState(
     require("../assets/icon-password.png")
   );
+
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,21 +44,67 @@ const LoginModal = () => {
   };
 
   const handleLogin = () => {
-    console.log(email, passowrd);
+    Keyboard.dismiss();
+
     setIsLoading(() => true);
     setTimeout(() => {
       setIsLoading(() => false);
       setIsSuccessful(() => true);
+      setTimeout(() => {
+        dispatch(closeModal());
+        setIsSuccessful(false);
+      }, 1000);
     }, 2000);
   };
 
-  const tabBackground = () => {
+  const tapBackground = () => {
     Keyboard.dismiss();
+    dispatch(closeModal());
   };
+
+  useEffect(() => {
+    if (modalReducer === "openModal") {
+      Animated.timing(top, {
+        toValue: 0,
+        duration: 0,
+        useNativeDriver: false,
+      }).start();
+      Animated.spring(scale, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: false,
+      }).start();
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration: 0,
+        useNativeDriver: false,
+      }).start();
+    }
+
+    if (modalReducer === "closeModal") {
+      setTimeout(() => {
+        Animated.timing(top, {
+          toValue: vh(100),
+          duration: 0,
+          useNativeDriver: false,
+        }).start();
+        Animated.spring(scale, {
+          toValue: 1.3,
+          useNativeDriver: false,
+        }).start();
+      }, 500);
+
+      Animated.timing(translateY, {
+        toValue: 1000,
+        duration: 400,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [modalReducer]);
   return (
     <>
-      <Container>
-        <TouchableWithoutFeedback onPress={tabBackground}>
+      <AnimatedContainer style={{ top: top }}>
+        <TouchableWithoutFeedback onPress={tapBackground}>
           <BlurView
             tint="default"
             intensity={100}
@@ -57,7 +115,19 @@ const LoginModal = () => {
             }}
           />
         </TouchableWithoutFeedback>
-        <Modal style={{ elevation: 15 }}>
+        <AnimatedModal
+          style={{
+            elevation: 15,
+            transform: [
+              {
+                scale: scale,
+              },
+              {
+                translateY: translateY,
+              },
+            ],
+          }}
+        >
           <Logo source={require("../assets/logo-dc.png")} />
           <Text>Hehehehe you can login now</Text>
           <InputWrappr>
@@ -99,9 +169,8 @@ const LoginModal = () => {
               <ButtonText>Login</ButtonText>
             </Button>
           </TouchableOpacity>
-        </Modal>
-      </Container>
-
+        </AnimatedModal>
+      </AnimatedContainer>
       <Success isActive={isSuccessful} />
       <Loading isActive={isLoading} />
     </>
@@ -112,13 +181,15 @@ export default LoginModal;
 const Container = styled.View`
   background: rgba(0, 0, 0, 0.75);
   position: absolute;
-  top: 0;
+  /* top: 0; */
   left: 0;
   width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
 `;
+
+const AnimatedContainer = Animated.createAnimatedComponent(Container);
 const Modal = styled.View`
   width: ${vw(90)}px;
   height: ${vw(100)}px;
@@ -127,6 +198,7 @@ const Modal = styled.View`
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   align-items: center;
 `;
+const AnimatedModal = Animated.createAnimatedComponent(Modal);
 const Logo = styled.Image`
   width: 44px;
   height: 44px;
