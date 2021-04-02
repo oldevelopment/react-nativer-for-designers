@@ -13,7 +13,8 @@ import { BlurView } from "expo-blur";
 import Success from "./Success";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { openMenu, closeModal } from "../Redux/actions/actions";
+import { closeModal } from "../Redux/actions/actions";
+import firebase from "./firebase";
 
 const LoginModal = () => {
   const [shownPassowrd, setShownPassowrd] = useState(false);
@@ -47,14 +48,26 @@ const LoginModal = () => {
     Keyboard.dismiss();
 
     setIsLoading(() => true);
-    setTimeout(() => {
-      setIsLoading(() => false);
-      setIsSuccessful(() => true);
-      setTimeout(() => {
-        dispatch(closeModal());
-        setIsSuccessful(false);
-      }, 1000);
-    }, 2000);
+
+    const Email = email;
+    const Pass = passowrd;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(Email, Pass)
+      .catch((err) => {
+        Alert.alert("Error", err.message);
+      })
+      .then((resp) => {
+        setIsLoading(false);
+        if (resp) {
+          setIsLoading(() => false);
+          setIsSuccessful(() => true);
+          setTimeout(() => {
+            dispatch(closeModal());
+            setIsSuccessful(false);
+          }, 1000);
+        }
+      });
   };
 
   const tapBackground = () => {
