@@ -285,11 +285,3 @@ const ButtonText = styled.Text`
   font-size: 20px;
   text-transform: uppercase;
 `;
-
-// const IconPassword = styled.Image`
-//   width: 18px;
-//   height: 24px;
-//   position: absolute;
-//   left: ${vw(12.5)}px;
-//   top: ${vw(61)}px;
-// `;
