@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  ScrollView,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { ScrollView, View, SafeAreaView, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { openMenu, openModal } from "../Redux/actions/actions";
+import { closeModal, openMenu, openModal } from "../Redux/actions/actions";
 
 import { CardsQuery, CourseQuery, LogoQuery } from "../Queries";
 import { NotificationIcon } from "./../components/Icons";
@@ -25,7 +19,8 @@ import LoginModal from "../components/LoginModal";
 
 const Home = () => {
   const modalReducer = useSelector((state) => state.modalReducer);
-
+  const nameReducer = useSelector((state) => state.nameReducer);
+  console.log("home");
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
   const { loading: LogoLoading, data: LogoData } = useQuery(LogoQuery);
   const { loading: CourseLoading, data: CourseData } = useQuery(CourseQuery);
@@ -35,32 +30,28 @@ const Home = () => {
   const [userPic, setUserPic] = useState(
     "https://source.unsplash.com/500x500/?face"
   );
+  let count = 0;
   const openLogin = () => {
-    // console.log(modalReducer);
     dispatch(openModal());
   };
-  const fetchData = async () => {
-    try {
-      const result = await axios.get("https://randomuser.me/api/");
-      setUserName(result.data.results[0].name.first);
-      setUserPic(result.data.results[0].picture.thumbnail);
-    } catch (error) {
-      console.warn(error);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const result = await axios.get("https://randomuser.me/api/");
+  //     setUserName(result.data.results[0].name.first);
+  //     setUserPic(result.data.results[0].picture.thumbnail);
+  //   } catch (error) {
+  //     console.warn(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   useEffect(() => {
-    fetchData();
-  }, []);
-
+    setUserName(nameReducer);
+  }, [nameReducer]);
   return (
     <>
       <Container>
-        {/* <Spinner
-          textStyle={{ color: "skyblue" }}
-          visible={CardLoading && LogoLoading && CourseLoading}
-          textContent={"Loading..."}
-          customIndicator={<ActivityIndicator size="large" color="skyblue" />}
-        /> */}
         <Menu userName={userName} />
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>

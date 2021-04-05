@@ -1,11 +1,11 @@
-const modalReducer = (state = "closeModal", action) => {
+const modalReducer = (state, action) => {
   switch (action.type) {
     case "openModal":
       return "openModal";
     case "closeModal":
       return "closeModal";
     default:
-      return state;
+      return "closeModal";
   }
 };
 export default modalReducer;

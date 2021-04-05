@@ -13,10 +13,29 @@ import { BlurView } from "expo-blur";
 import Success from "./Success";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../Redux/actions/actions";
+import { closeModal, updateName } from "../Redux/actions/actions";
 import firebase from "./firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginModal = () => {
+  const storeName = async (value) => {
+    try {
+      await AsyncStorage.setItem("name", value);
+    } catch (e) {
+      Alert.alert(e);
+    }
+  };
+
+  const getName = async () => {
+    try {
+      const value = await AsyncStorage.getItem("name");
+      if (value) {
+        dispatch(updateName(value));
+      }
+    } catch (e) {
+      Alert.alert(e);
+    }
+  };
   const [shownPassowrd, setShownPassowrd] = useState(false);
   const [email, setEmail] = useState("");
   const [passowrd, setPassowrd] = useState("");
@@ -26,6 +45,9 @@ const LoginModal = () => {
   const translateY = useRef(new Animated.Value(0)).current;
 
   const modalReducer = useSelector((state) => state.modalReducer);
+  const nameReducer = useSelector((state) => state.nameReducer);
+  console.log(nameReducer);
+
   const dispatch = useDispatch();
 
   const [passwordUrl, setPasswordUrl] = useState(
@@ -60,11 +82,14 @@ const LoginModal = () => {
       .then((resp) => {
         setIsLoading(false);
         if (resp) {
+          storeName(resp.user.email);
+
           setIsLoading(() => false);
           setIsSuccessful(() => true);
           setTimeout(() => {
             dispatch(closeModal());
             setIsSuccessful(false);
+            getName();
           }, 1000);
         }
       });
@@ -106,7 +131,6 @@ const LoginModal = () => {
           useNativeDriver: false,
         }).start();
       }, 500);
-
       Animated.timing(translateY, {
         toValue: 1000,
         duration: 400,
@@ -152,6 +176,7 @@ const LoginModal = () => {
               placeholder="Email"
               keyboardType="email-address"
               onChangeText={(email) => setEmail(email)}
+              defaultValue=""
               value={email}
               onFocus={focusEmail}
             />
@@ -194,7 +219,6 @@ export default LoginModal;
 const Container = styled.View`
   background: rgba(0, 0, 0, 0.75);
   position: absolute;
-  /* top: 0; */
   left: 0;
   width: 100%;
   height: 100%;
