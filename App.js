@@ -1,14 +1,13 @@
 import React from "react";
-
-import allReducers from "./Redux/reducers/reducers";
+import AllReducers from "./Redux/reducers/AllReducers";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-const myStore = createStore(allReducers);
-console.reportErrorsAsExceptions = false;
 import AppNavigator from "./navigator/AppNavigator";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { StatusBar } from "react-native";
 
+const myStore = createStore(AllReducers);
+console.reportErrorsAsExceptions = false;
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   uri: "https://graphql.contentful.com/content/v1/spaces/yk83xashtump",
@@ -21,11 +20,11 @@ const client = new ApolloClient({
 export default function App() {
   StatusBar.setBackgroundColor("#f0f3f5");
   return (
-    <ApolloProvider client={client}>
-      <Provider store={myStore}>
+    <Provider store={myStore}>
+      <ApolloProvider client={client}>
         <StatusBar barStyle="dark-content" />
         <AppNavigator />
-      </Provider>
-    </ApolloProvider>
+      </ApolloProvider>
+    </Provider>
   );
 }

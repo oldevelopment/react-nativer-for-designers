@@ -18,9 +18,8 @@ import Spinner from "react-native-loading-spinner-overlay";
 import LoginModal from "../components/LoginModal";
 
 const Home = () => {
-  const modalReducer = useSelector((state) => state.modalReducer);
-  const nameReducer = useSelector((state) => state.nameReducer);
-  console.log("home");
+  const AllReducers = useSelector((state) => state);
+  // console.log(Reducer);
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
   const { loading: LogoLoading, data: LogoData } = useQuery(LogoQuery);
   const { loading: CourseLoading, data: CourseData } = useQuery(CourseQuery);
@@ -30,10 +29,8 @@ const Home = () => {
   const [userPic, setUserPic] = useState(
     "https://source.unsplash.com/500x500/?face"
   );
-  let count = 0;
-  const openLogin = () => {
-    dispatch(openModal());
-  };
+  const [state, setstate] = useState(false);
+  const openLogin = () => {};
   // const fetchData = async () => {
   //   try {
   //     const result = await axios.get("https://randomuser.me/api/");
@@ -47,8 +44,10 @@ const Home = () => {
   //   fetchData();
   // }, []);
   useEffect(() => {
-    setUserName(nameReducer);
-  }, [nameReducer]);
+    if (AllReducers.name) {
+      setUserName(AllReducers.name);
+    }
+  }, [AllReducers]);
   return (
     <>
       <Container>
@@ -56,7 +55,7 @@ const Home = () => {
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>
             <TitleBar>
-              <TouchableOpacity onPress={openLogin}>
+              <TouchableOpacity onPress={() => dispatch(openModal())}>
                 <Avatar userPic={userPic} />
               </TouchableOpacity>
               <View>

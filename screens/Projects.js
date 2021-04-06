@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { Animated, PanResponder } from "react-native";
 import { useSelector } from "react-redux";
 import { vh } from "react-native-expo-viewport-units";
-
 import styled from "styled-components/native";
 import Project from "../components/Project";
 const Projects = () => {
@@ -13,7 +12,7 @@ const Projects = () => {
   const thirdScale = useRef(new Animated.Value(0.8)).current;
   const thirdTranslateY = useRef(new Animated.Value(-50)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const gesture = useSelector((state) => state.isGestureEnabled);
+  const AllReducers = useSelector((state) => state);
   const nextIndex = (index) => {
     if (index >= projects.length - 1) {
       return 0;
@@ -24,7 +23,7 @@ const Projects = () => {
   const resp = PanResponder.create({
     onMoveShouldSetPanResponder: (e, gestureState) => {
       return (gestureState.dx === 0 && gestureState.dy === 0) ||
-        gesture === "disableGesture"
+        AllReducers.action === "disableGesture"
         ? false
         : true;
     },

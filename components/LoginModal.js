@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, updateName } from "../Redux/actions/actions";
 import firebase from "./firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AllReducers from "../Redux/reducers/AllReducers";
 
 const LoginModal = () => {
   const storeName = async (value) => {
@@ -44,9 +45,7 @@ const LoginModal = () => {
   const scale = useRef(new Animated.Value(1.3)).current;
   const translateY = useRef(new Animated.Value(0)).current;
 
-  const modalReducer = useSelector((state) => state.modalReducer);
-  const nameReducer = useSelector((state) => state.nameReducer);
-  console.log(nameReducer);
+  const AllReducers = useSelector((state) => state);
 
   const dispatch = useDispatch();
 
@@ -101,43 +100,45 @@ const LoginModal = () => {
   };
 
   useEffect(() => {
-    if (modalReducer === "openModal") {
-      Animated.timing(top, {
-        toValue: 0,
-        duration: 0,
-        useNativeDriver: false,
-      }).start();
-      Animated.spring(scale, {
-        toValue: 1,
-        duration: 600,
-        useNativeDriver: false,
-      }).start();
-      Animated.timing(translateY, {
-        toValue: 0,
-        duration: 0,
-        useNativeDriver: false,
-      }).start();
-    }
-
-    if (modalReducer === "closeModal") {
-      setTimeout(() => {
+    if (AllReducers.action) {
+      if (AllReducers.action === "openModal") {
         Animated.timing(top, {
-          toValue: vh(100),
+          toValue: 0,
           duration: 0,
           useNativeDriver: false,
         }).start();
         Animated.spring(scale, {
-          toValue: 1.3,
+          toValue: 1,
+          duration: 600,
           useNativeDriver: false,
         }).start();
-      }, 500);
-      Animated.timing(translateY, {
-        toValue: 1000,
-        duration: 400,
-        useNativeDriver: false,
-      }).start();
+        Animated.timing(translateY, {
+          toValue: 0,
+          duration: 0,
+          useNativeDriver: false,
+        }).start();
+      }
+
+      if (AllReducers.action === "closeModal") {
+        setTimeout(() => {
+          Animated.timing(top, {
+            toValue: vh(100),
+            duration: 0,
+            useNativeDriver: false,
+          }).start();
+          Animated.spring(scale, {
+            toValue: 1.3,
+            useNativeDriver: false,
+          }).start();
+        }, 500);
+        Animated.timing(translateY, {
+          toValue: 1000,
+          duration: 400,
+          useNativeDriver: false,
+        }).start();
+      }
     }
-  }, [modalReducer]);
+  }, [AllReducers]);
   return (
     <>
       <AnimatedContainer style={{ top: top }}>

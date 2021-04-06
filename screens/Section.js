@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native";
-
 import Markdown from "react-native-showdown";
-
 import styled from "styled-components/native";
 import { vh } from "react-native-expo-viewport-units";
 import * as Icon from "@expo/vector-icons";
-
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 
