@@ -82,13 +82,12 @@ const LoginModal = () => {
         setIsLoading(false);
         if (resp) {
           storeName(resp.user.email);
-
+          getName();
           setIsLoading(() => false);
           setIsSuccessful(() => true);
           setTimeout(() => {
-            dispatch(closeModal());
             setIsSuccessful(false);
-            getName();
+            dispatch(closeModal());
           }, 1000);
         }
       });
@@ -138,7 +137,7 @@ const LoginModal = () => {
         }).start();
       }
     }
-  }, [AllReducers]);
+  }, [AllReducers.action]);
   return (
     <>
       <AnimatedContainer style={{ top: top }}>

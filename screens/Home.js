@@ -43,10 +43,16 @@ const Home = () => {
   // useEffect(() => {
   //   fetchData();
   // }, []);
-  useEffect(() => {
+  const handleAvatar = () => {
+    // console.log( == false);
     if (AllReducers.name) {
-      setUserName(AllReducers.name);
+      dispatch(openMenu());
+    } else {
+      dispatch(openModal());
     }
+  };
+  useEffect(() => {
+    setUserName(AllReducers.name);
   }, [AllReducers]);
   return (
     <>
@@ -55,7 +61,7 @@ const Home = () => {
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>
             <TitleBar>
-              <TouchableOpacity onPress={() => dispatch(openModal())}>
+              <TouchableOpacity onPress={handleAvatar}>
                 <Avatar userPic={userPic} />
               </TouchableOpacity>
               <View>

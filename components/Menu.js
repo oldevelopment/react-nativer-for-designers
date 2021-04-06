@@ -4,9 +4,9 @@ import { Animated, TouchableOpacity } from "react-native";
 import * as Icon from "@expo/vector-icons";
 import { vh } from "react-native-expo-viewport-units";
 import MenuItem from "./MenuItem";
-
 import { useSelector, useDispatch } from "react-redux";
-import { closeMenu } from "../Redux/actions/actions";
+import { closeMenu, updateName } from "../Redux/actions/actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const menItems = [
   { icon: "ios-settings", title: "Account", text: "settings" },
@@ -16,7 +16,7 @@ const menItems = [
 
 const Menu = ({ userName }) => {
   const dispatch = useDispatch();
-  const menuState = useSelector((state) => state.isOpened);
+  const AllReducers = useSelector((state) => state);
   const fadeAnim = useRef(new Animated.Value(vh(110))).current;
 
   const fadeIn = () => {
@@ -32,17 +32,24 @@ const Menu = ({ userName }) => {
       useNativeDriver: false,
     }).start();
   };
-
-  const handleMenu = () => {
-    if (menuState == "openMenu") {
+  const startAnimating = () => {
+    if (AllReducers.action === "openMenu") {
       fadeIn();
-    } else if (menuState == "closeMenu") {
+    } else if (AllReducers.action === "closeMenu") {
       fadeOut();
     }
   };
   useEffect(() => {
-    handleMenu();
-  }, [menuState]);
+    startAnimating();
+  }, [AllReducers]);
+
+  const handleMenu = (title) => {
+    if (title === "Log out") {
+      dispatch(closeMenu());
+      dispatch(updateName(""));
+      AsyncStorage.clear();
+    }
+  };
 
   return (
     <AnimatedContainer style={{ top: fadeAnim }}>
@@ -67,12 +74,14 @@ const Menu = ({ userName }) => {
       </TouchableOpacity>
       <Content>
         {menItems.map(({ icon, text, title }, i) => (
-          <MenuItem
+          <TouchableOpacity
             key={`${i}-${text}`}
-            iconName={icon}
-            title={title}
-            text={text}
-          />
+            onPress={() => {
+              handleMenu(title);
+            }}
+          >
+            <MenuItem iconName={icon} title={title} text={text} />
+          </TouchableOpacity>
         ))}
       </Content>
     </AnimatedContainer>
