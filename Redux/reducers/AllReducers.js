@@ -1,7 +1,9 @@
 const initalState = {
   action: "",
-  name: "",
+  name: "Stranger",
+  avatar: require("../../assets/sad-avatar.png"),
 };
+
 const AllReducers = (state = initalState, action) => {
   switch (action.type) {
     case "disableGesture":
@@ -18,6 +20,8 @@ const AllReducers = (state = initalState, action) => {
       return { ...state, action: "closeModal" };
     case "updateName":
       return { ...state, name: action.name };
+    case "updateAvatar":
+      return { ...state, avatar: action.avatar };
     default:
       return state;
   }

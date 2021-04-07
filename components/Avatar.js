@@ -1,7 +1,16 @@
 import React from "react";
 import styled from "styled-components/native";
+import { useSelector } from "react-redux";
 
-const Avatar = ({ userPic }) => <Image source={{ uri: userPic }} />;
+const Avatar = () => {
+  const avatar = useSelector((state) => state.avatar);
+
+  return (
+    <>
+      <Image source={avatar} />
+    </>
+  );
+};
 export default Avatar;
 const Image = styled.Image`
   width: 44px;

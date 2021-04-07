@@ -13,30 +13,12 @@ import { BlurView } from "expo-blur";
 import Success from "./Success";
 import Loading from "./Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, updateName } from "../Redux/actions/actions";
+import { closeModal, updateAvatar, updateName } from "../Redux/actions/actions";
 import firebase from "./firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AllReducers from "../Redux/reducers/AllReducers";
+import { saveState } from "./Storage";
 
 const LoginModal = () => {
-  const storeName = async (value) => {
-    try {
-      await AsyncStorage.setItem("name", value);
-    } catch (e) {
-      Alert.alert(e);
-    }
-  };
-
-  const getName = async () => {
-    try {
-      const value = await AsyncStorage.getItem("name");
-      if (value) {
-        dispatch(updateName(value));
-      }
-    } catch (e) {
-      Alert.alert(e);
-    }
-  };
   const [shownPassowrd, setShownPassowrd] = useState(false);
   const [email, setEmail] = useState("");
   const [passowrd, setPassowrd] = useState("");
@@ -44,18 +26,13 @@ const LoginModal = () => {
   const top = useRef(new Animated.Value(vh(100))).current;
   const scale = useRef(new Animated.Value(1.3)).current;
   const translateY = useRef(new Animated.Value(0)).current;
-
   const AllReducers = useSelector((state) => state);
-
   const dispatch = useDispatch();
-
   const [passwordUrl, setPasswordUrl] = useState(
     require("../assets/icon-password.png")
   );
-
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const focusPassowrd = () => {
     setPasswordUrl(require("../assets/icon-password-animated.gif"));
     setEmailUrl(require("../assets/icon-email.png"));
@@ -63,6 +40,14 @@ const LoginModal = () => {
   const focusEmail = () => {
     setPasswordUrl(require("../assets/icon-password.png"));
     setEmailUrl(require("../assets/icon-email-animated.gif"));
+  };
+
+  const fetchUser = () => {
+    const name = "Hewr";
+    const avatar = require("../assets/happy-avatar.png");
+    dispatch(updateName(name));
+    dispatch(updateAvatar(avatar));
+    saveState({ name, avatar });
   };
 
   const handleLogin = () => {
@@ -81,8 +66,7 @@ const LoginModal = () => {
       .then((resp) => {
         setIsLoading(false);
         if (resp) {
-          storeName(resp.user.email);
-          getName();
+          fetchUser();
           setIsLoading(() => false);
           setIsSuccessful(() => true);
           setTimeout(() => {

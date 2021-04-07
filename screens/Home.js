@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, View, SafeAreaView, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { closeModal, openMenu, openModal } from "../Redux/actions/actions";
+import {
+  closeModal,
+  openMenu,
+  openModal,
+  updateName,
+  updateAvatar,
+} from "../Redux/actions/actions";
 
 import { CardsQuery, CourseQuery, LogoQuery } from "../Queries";
 import { NotificationIcon } from "./../components/Icons";
@@ -13,60 +19,51 @@ import Logo from "./../components/Logo";
 import Course from "./../components/Course";
 import Menu from "./../components/Menu";
 import Avatar from "../components/Avatar";
-import axios from "axios";
-import Spinner from "react-native-loading-spinner-overlay";
 import LoginModal from "../components/LoginModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = () => {
   const AllReducers = useSelector((state) => state);
-  // console.log(Reducer);
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
   const { loading: LogoLoading, data: LogoData } = useQuery(LogoQuery);
   const { loading: CourseLoading, data: CourseData } = useQuery(CourseQuery);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState("User");
-  const [userPic, setUserPic] = useState(
-    "https://source.unsplash.com/500x500/?face"
-  );
-  const [state, setstate] = useState(false);
-  const openLogin = () => {};
-  // const fetchData = async () => {
-  //   try {
-  //     const result = await axios.get("https://randomuser.me/api/");
-  //     setUserName(result.data.results[0].name.first);
-  //     setUserPic(result.data.results[0].picture.thumbnail);
-  //   } catch (error) {
-  //     console.warn(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+
   const handleAvatar = () => {
-    // console.log( == false);
-    if (AllReducers.name) {
+    if (AllReducers.name !== "Stranger") {
       dispatch(openMenu());
     } else {
       dispatch(openModal());
     }
   };
+  const loadState = () => {
+    AsyncStorage.getItem("state")
+      .then((serializedState) => {
+        const state = JSON.parse(serializedState);
+        if (state) {
+          dispatch(updateAvatar(require("../assets/happy-avatar.png")));
+          dispatch(updateName(state.name));
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
-    setUserName(AllReducers.name);
-  }, [AllReducers]);
+    loadState();
+  }, []);
   return (
     <>
       <Container>
-        <Menu userName={userName} />
+        <Menu />
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>
             <TitleBar>
               <TouchableOpacity onPress={handleAvatar}>
-                <Avatar userPic={userPic} />
+                <Avatar />
               </TouchableOpacity>
               <View>
                 <Title>Welcome back,</Title>
-                <Name>{userName}</Name>
+                <Name>{AllReducers.name}</Name>
               </View>
               <NotificationIcon
                 style={{ position: "absolute", right: 20, top: 5 }}

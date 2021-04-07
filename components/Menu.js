@@ -5,7 +5,7 @@ import * as Icon from "@expo/vector-icons";
 import { vh } from "react-native-expo-viewport-units";
 import MenuItem from "./MenuItem";
 import { useSelector, useDispatch } from "react-redux";
-import { closeMenu, updateName } from "../Redux/actions/actions";
+import { closeMenu, updateAvatar, updateName } from "../Redux/actions/actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const menItems = [
@@ -14,7 +14,7 @@ const menItems = [
   { icon: "ios-exit", title: "Log out", text: "see you soon" },
 ];
 
-const Menu = ({ userName }) => {
+const Menu = () => {
   const dispatch = useDispatch();
   const AllReducers = useSelector((state) => state);
   const fadeAnim = useRef(new Animated.Value(vh(110))).current;
@@ -45,9 +45,12 @@ const Menu = ({ userName }) => {
 
   const handleMenu = (title) => {
     if (title === "Log out") {
-      dispatch(closeMenu());
-      dispatch(updateName(""));
       AsyncStorage.clear();
+      dispatch(closeMenu());
+      dispatch(updateName("Stranger"));
+      dispatch(updateAvatar(require("../assets/sad-avatar.png")));
+
+      console.log(AllReducers);
     }
   };
 
@@ -55,7 +58,7 @@ const Menu = ({ userName }) => {
     <AnimatedContainer style={{ top: fadeAnim }}>
       <Cover>
         <Image source={require("../assets/background2.jpg")} />
-        <Title>{userName}</Title>
+        <Title>{AllReducers.name}</Title>
         <Subtitle>Freelancer at home</Subtitle>
       </Cover>
       <TouchableOpacity
