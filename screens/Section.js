@@ -1,27 +1,45 @@
 import React, { useEffect } from "react";
-import { TouchableOpacity } from "react-native";
+import { BackHandler, TouchableOpacity } from "react-native";
 import Markdown from "react-native-showdown";
 import styled from "styled-components/native";
 import { vh } from "react-native-expo-viewport-units";
 import * as Icon from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
+import { PlayIcon } from "../components/Icons";
 
 const Section = ({ route, handleTabbarVisibility }) => {
   const navigation = useNavigation();
   const EnablehandleTabbarVisibility = () => {
     handleTabbarVisibility(true);
   };
+
   useEffect(() => {
-    if (route.name === "section") {
+    if (route.name === "section" || route.name === "video") {
       handleTabbarVisibility(false);
     }
-  }, []);
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      EnablehandleTabbarVisibility
+    );
+  }, [route.name]);
   const sectionData = route.params.section;
   return (
     <ScrollView>
       <Container>
         <Cover>
+          <PlayWrapper>
+            <TouchableOpacity
+              underlayColor="transparent"
+              onPress={() => {
+                navigation.navigate("video");
+              }}
+            >
+              <PlayView>
+                <PlayIcon style={{ marginLeft: -10 }} />
+              </PlayView>
+            </TouchableOpacity>
+          </PlayWrapper>
           <Image source={{ uri: sectionData.image.url }} />
           <Wrapper>
             <Logo source={{ uri: sectionData.logo.url }} />
@@ -32,7 +50,7 @@ const Section = ({ route, handleTabbarVisibility }) => {
         </Cover>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("home");
+            navigation.goBack();
             EnablehandleTabbarVisibility();
           }}
           style={{
@@ -175,4 +193,21 @@ const CloseView = styled.View`
   justify-content: center;
   align-items: center;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+`;
+const PlayWrapper = styled.View`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -40px;
+  margin-left: -40px;
+  z-index: 1;
+`;
+
+const PlayView = styled.View`
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
 `;

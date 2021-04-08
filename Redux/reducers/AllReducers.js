@@ -18,6 +18,10 @@ const AllReducers = (state = initalState, action) => {
       return { ...state, action: "openModal" };
     case "closeModal":
       return { ...state, action: "closeModal" };
+    case "openNotif":
+      return { ...state, action: "openNotif" };
+    case "closeNotif":
+      return { ...state, action: "closeNotif" };
     case "updateName":
       return { ...state, name: action.name };
     case "updateAvatar":

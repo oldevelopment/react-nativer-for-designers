@@ -2,23 +2,53 @@ import React from "react";
 // import { View, Text } from "react-native";
 import styled from "styled-components/native";
 
-const Course = ({ image, logo, subtitle, title, avatar, caption, author }) => {
+const Course = ({
+  image,
+  logo,
+  subtitle,
+  title,
+  avatar,
+  caption,
+  author,
+  includeUri,
+}) => {
   return (
-    <Container style={{ elevation: 8 }}>
-      <Cover>
-        <Image source={{ uri: image }} />
-        <FlexContainer>
-          <Logo resizeMode="contain" source={{ uri: logo }} />
-        </FlexContainer>
-        <Subtitle>{subtitle}</Subtitle>
-        <Title>{title}</Title>
-      </Cover>
-      <Content>
-        <Avatar source={{ uri: avatar }} />
-        <Caption>{caption}</Caption>
-        <Author>Taught by {author}</Author>
-      </Content>
-    </Container>
+    <>
+      {includeUri && (
+        <Container style={{ elevation: 8 }}>
+          <Cover>
+            <Image source={{ uri: image }} />
+            <FlexContainer>
+              <Logo resizeMode="contain" source={{ uri: logo }} />
+            </FlexContainer>
+            <Subtitle>{subtitle}</Subtitle>
+            <Title>{title}</Title>
+          </Cover>
+          <Content>
+            <Avatar source={{ uri: avatar }} />
+            <Caption>{caption}</Caption>
+            <Author>Taught by {author}</Author>
+          </Content>
+        </Container>
+      )}
+      {!includeUri && (
+        <Container style={{ elevation: 8 }}>
+          <Cover>
+            <Image source={image} />
+            <FlexContainer>
+              <Logo resizeMode="contain" source={logo} />
+            </FlexContainer>
+            <Subtitle>{subtitle}</Subtitle>
+            <Title>{title}</Title>
+          </Cover>
+          <Content>
+            <Avatar source={avatar} />
+            <Caption>{caption}</Caption>
+            <Author>Taught by {author}</Author>
+          </Content>
+        </Container>
+      )}
+    </>
   );
 };
 

@@ -5,7 +5,9 @@ import Section from "../screens/Section";
 import { Ionicons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import Projects from "../screens/Projects";
-import Courses from "../screens/Courses";
+
+import VideoScreen from "../screens/VideoScreen";
+import CourseScreen from "../screens/CoursesScreen";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -25,12 +27,16 @@ const HomeStack = ({ handleTabbarVisibility }) => (
         ),
       }}
     />
-    <Stack.Screen
-      name="section"
-      options={{
-        tabBarVisible: false,
-      }}
-    >
+
+    <Stack.Screen name="video">
+      {(props) => (
+        <VideoScreen
+          handleTabbarVisibility={handleTabbarVisibility}
+          {...props}
+        />
+      )}
+    </Stack.Screen>
+    <Stack.Screen name="section">
       {(props) => (
         <Section handleTabbarVisibility={handleTabbarVisibility} {...props} />
       )}
@@ -69,7 +75,7 @@ export default function TabNavigator() {
 
       <Screen
         name="course"
-        component={Courses}
+        component={CourseScreen}
         options={{
           tabBarLabel: "Courses",
           tabBarVisible: tabbarvisibility,

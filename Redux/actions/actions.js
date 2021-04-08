@@ -10,3 +10,5 @@ export const updateAvatar = (avatar) => ({
   type: "updateAvatar",
   avatar: avatar,
 });
+export const openNotif = () => ({ type: "openNotif" });
+export const closeNotif = () => ({ type: "closeNotif" });

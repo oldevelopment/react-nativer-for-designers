@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ScrollView, View, SafeAreaView, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
-  closeModal,
   openMenu,
   openModal,
   updateName,
   updateAvatar,
+  openNotif,
 } from "../Redux/actions/actions";
-
 import { CardsQuery, CourseQuery, LogoQuery } from "../Queries";
 import { NotificationIcon } from "./../components/Icons";
 import { useQuery } from "@apollo/client";
@@ -21,6 +20,8 @@ import Menu from "./../components/Menu";
 import Avatar from "../components/Avatar";
 import LoginModal from "../components/LoginModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import NotificationButton from "../components/NotificationButton";
+import Notifications from "../components/Notifications";
 
 const Home = () => {
   const AllReducers = useSelector((state) => state);
@@ -51,10 +52,14 @@ const Home = () => {
   useEffect(() => {
     loadState();
   }, []);
+  const handleNotif = () => {
+    dispatch(openNotif());
+  };
   return (
     <>
       <Container>
         <Menu />
+        <Notifications />
         <SafeAreaView>
           <ScrollView style={{ height: "100%" }}>
             <TitleBar>
@@ -65,9 +70,15 @@ const Home = () => {
                 <Title>Welcome back,</Title>
                 <Name>{AllReducers.name}</Name>
               </View>
-              <NotificationIcon
+              {/* <NotificationIcon
                 style={{ position: "absolute", right: 20, top: 5 }}
-              />
+              /> */}
+              <TouchableOpacity
+                onPress={handleNotif}
+                style={{ position: "absolute", right: 20, top: 5 }}
+              >
+                <NotificationButton />
+              </TouchableOpacity>
             </TitleBar>
             <ScrollView
               horizontal
@@ -123,6 +134,7 @@ const Home = () => {
                     logo={logo.url}
                     avatar={avatar.url}
                     caption={caption}
+                    includeUri={true}
                   />
                 )
               )}
