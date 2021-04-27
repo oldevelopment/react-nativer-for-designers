@@ -16,7 +16,6 @@ const Notifications = () => {
   const dispatch = useDispatch();
   const AllReducers = useSelector((state) => state);
   const toggleNotif = () => {
-    console.log(AllReducers);
     if (AllReducers.action == "openNotif") {
       Animated.parallel([
         Animated.spring(translateY, {

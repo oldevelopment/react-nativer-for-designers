@@ -49,8 +49,6 @@ const Menu = () => {
       dispatch(closeMenu());
       dispatch(updateName("Stranger"));
       dispatch(updateAvatar(require("../assets/sad-avatar.png")));
-
-      console.log(AllReducers);
     }
   };
 

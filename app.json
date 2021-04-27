@@ -5,7 +5,10 @@
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/dc-icon.png",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -14,7 +17,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     },
@@ -24,6 +29,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hewr.myapp"
-    }
+    },
+    "description": "react-native for designers with everything in functional ",
+    "githubUrl": "https://github.com/Hewr-Srood/react-nativer-for-designers"
   }
 }

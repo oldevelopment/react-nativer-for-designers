@@ -6,7 +6,6 @@ import Course from "./Course";
 const Courses = () => (
   <Container>
     {courses.map((course, index) => {
-      console.log(course);
       return (
         <Course
           key={index}

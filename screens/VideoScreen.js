@@ -5,7 +5,6 @@ import { vw } from "react-native-expo-viewport-units";
 import { useNavigation } from "@react-navigation/native";
 import { Video } from "expo-av";
 import * as Icon from "@expo/vector-icons";
-import * as ScreenOrientation from "expo-screen-orientation";
 
 const VideoScreen = () => {
   const navigation = useNavigation();
