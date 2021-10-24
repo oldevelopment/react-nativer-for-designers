@@ -10,10 +10,10 @@ const myStore = createStore(AllReducers);
 console.reportErrorsAsExceptions = false;
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: "https://graphql.contentful.com/content/v1/spaces/yk83xashtump",
+  uri: "https://graphql.contentful.com/content/v1/spaces/1gnle2li4xhx",
   credentials: "same-origin",
   headers: {
-    Authorization: `Bearer lRWeme1lzT5dbssBx0_IH9Z6vF0-0guflEslRcFsjL0`,
+    Authorization: `Bearer Lv0MYqJi6VQD2BAvXUYJafa3LoxFHEd0uOkoqbu6lfI`,
   },
 });
 

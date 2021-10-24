@@ -9,11 +9,11 @@ import * as firebase from "firebase";
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyAKEB9_9_X9yiNtwiC0JqIsHvfNPCAM-CU",
-  authDomain: "rn-designcode.firebaseapp.com",
-  databaseURL: "https://rn-designcode.firebaseio.com",
-  projectId: "rn-designcode",
-  storageBucket: "rn-designcode.appspot.com",
+  apiKey: "AIzaSyAPL7Wlak_a7tsSDBCbjtuZBuVfLMz4CyY",
+  authDomain: "flatline-app.firebaseapp.com",
+  databaseURL: "https://flatline-app.firebaseio.com",
+  projectId: "flatline-app",
+  storageBucket: "flatline-app.appspot.com",
   messagingSenderId: "sender-id",
   appId: "app-id",
   measurementId: "G-measurement-id",
