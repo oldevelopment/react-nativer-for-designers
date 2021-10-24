@@ -61,7 +61,7 @@ const Home = () => {
         <Menu />
         <Notifications />
         <SafeAreaView>
-          <ScrollView style={{ height: "100%" }}>
+          <ScrollView style={{ height: "100%" }} showsHorizontalScrollIndicator={false}>
             <TitleBar>
               <TouchableOpacity onPress={handleAvatar}>
                 <Avatar />
@@ -117,27 +117,28 @@ const Home = () => {
                     />
                   </TouchableOpacity>
                 ))}
+                
             </ScrollView>
             <Subtitle>Popular Projects</Subtitle>
             {CourseData &&
-              CourseData.courseCollection.items.map(
-                (
-                  { title, subTitle, image, logo, author, avatar, caption },
-                  i
-                ) => (
-                  <Course
-                    key={`${i}-${title}`}
-                    title={title}
-                    subtitle={subTitle}
-                    author={author}
-                    image={image.url}
-                    logo={logo.url}
-                    avatar={avatar.url}
-                    caption={caption}
-                    includeUri={true}
-                  />
-                )
-              )}
+                CourseData.courseCollection.items.map((course, i) => (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("section", { section: course })
+                    }
+                    key={`${i}${course.title}`}
+                  >
+                    <Course
+                      image={course.image}
+                      title={course.title}
+                      logo={course.logo}
+                      avatar={course.avatar}
+                      caption={course.caption}
+                      subtitle={course.subTitle}
+                      author={course.author}
+                    />
+                  </TouchableOpacity>
+                ))}
           </ScrollView>
         </SafeAreaView>
       </Container>

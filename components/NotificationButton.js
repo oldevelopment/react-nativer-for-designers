@@ -6,7 +6,7 @@ const NotificationButton = () => (
   <Container>
     <NotificationIcon />
     <Bubble>
-      <Text>3</Text>
+      <Text>NEW</Text>
     </Bubble>
   </Container>
 );
@@ -21,12 +21,12 @@ const Container = styled.View`
 `;
 
 const Bubble = styled.View`
-  width: 16px;
+  width: 40px;
   height: 16px;
   background: #3c4560;
   position: absolute;
-  top: 0px;
-  right: 5px;
+  top: 38px;
+  right: 0px;
   border-radius: 8px;
   justify-content: center;
   align-items: center;

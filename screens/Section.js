@@ -25,7 +25,7 @@ const Section = ({ route, handleTabbarVisibility }) => {
   }, [route.name]);
   const sectionData = route.params.section;
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Container>
         <Cover>
           <PlayWrapper>

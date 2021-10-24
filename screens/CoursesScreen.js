@@ -16,7 +16,7 @@ const CoursesScreen = () => {
             style={{ position: "absolute", width: 450, height: 460 }}
           />
           <Logo source={require("../assets/logo-react.png")} />
-          <Caption>12 Sections</Caption>
+          <Caption>Flatline Agency</Caption>
           <Title>We make you Pulse</Title>
           <Sections>
             <SectionScrollView

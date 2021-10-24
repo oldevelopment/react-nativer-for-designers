@@ -17,6 +17,7 @@ const Courses = () => (
           avatar={course.avatar}
           caption={course.caption}
           includeUri={false}
+          content={course.content}
         />
       );
     })}

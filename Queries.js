@@ -71,6 +71,7 @@ export const CourseQuery = gql`
           width
           height
         }
+        content
       }
     }
   }
