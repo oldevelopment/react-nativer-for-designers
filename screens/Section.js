@@ -55,7 +55,7 @@ const Section = ({ route, handleTabbarVisibility }) => {
           }}
           style={{
             position: "absolute",
-            top: 20,
+            top: 50,
             right: 20,
           }}
         >
@@ -154,7 +154,7 @@ const Wrapper = styled.View`
   flex-direction: row;
   align-items: center;
   position: absolute;
-  top: 40px;
+  top: 50px;
   left: 20px;
 `;
 const Logo = styled.Image`

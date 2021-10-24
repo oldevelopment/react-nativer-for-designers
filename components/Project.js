@@ -99,7 +99,7 @@ const Project = ({ image, title, author, text, shouldOpen }) => {
               }}
             >
               <TouchableOpacity onPress={closeCard}>
-                <Icon.Ionicons name="ios-close" size={32} color="#546bfb" />
+                <Icon.Ionicons name="ios-close" size={32} top={50} color="#546bfb" />
               </TouchableOpacity>
             </AnimatedCloseView>
           </AnimatedContainer>

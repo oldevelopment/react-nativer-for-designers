@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "Flatline Agency",
+    "slug": "Flatline-agency",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/dc-icon.png",
@@ -24,13 +24,13 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.hewr.myapp"
+      "package": "com.flatlineagency.flatlineagency"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hewr.myapp"
+      "bundleIdentifier": "com.flatlineagency.flatlineagency"
     },
-    "description": "react-native for designers with everything in functional ",
-    "githubUrl": "https://github.com/Hewr-Srood/react-nativer-for-designers"
+    "description": "Flatline Agency's latest work of projects by our offices around the world",
+    "githubUrl": "https://github.com/oldevelopment/react-nativer-for-designers.git"
   }
 }

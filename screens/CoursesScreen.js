@@ -17,7 +17,7 @@ const CoursesScreen = () => {
           />
           <Logo source={require("../assets/logo-react.png")} />
           <Caption>12 Sections</Caption>
-          <Title>React Native for Designers</Title>
+          <Title>We make you Pulse</Title>
           <Sections>
             <SectionScrollView
               horizontal={true}
@@ -35,10 +35,10 @@ const CoursesScreen = () => {
           </Sections>
           <Author>
             <Avatar source={require("../assets/avatar.jpg")} />
-            <Name>Taught by Meng To</Name>
+            <Name>By Flatline Agency</Name>
           </Author>
         </Hero>
-        <Subtitle>Latest Courses</Subtitle>
+        <Subtitle>Latest Projects</Subtitle>
         <Courses />
       </ScrollView>
     </Container>

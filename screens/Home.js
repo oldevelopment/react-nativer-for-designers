@@ -94,7 +94,7 @@ const Home = () => {
                   <Logo key={`${name}-${index}`} image={logo.url} name={name} />
                 ))}
             </ScrollView>
-            <Subtitle>Continue learning</Subtitle>
+            <Subtitle>Latest projects</Subtitle>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -118,7 +118,7 @@ const Home = () => {
                   </TouchableOpacity>
                 ))}
             </ScrollView>
-            <Subtitle>Popular Courses</Subtitle>
+            <Subtitle>Popular Projects</Subtitle>
             {CourseData &&
               CourseData.courseCollection.items.map(
                 (
