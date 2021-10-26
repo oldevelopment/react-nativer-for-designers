@@ -116,17 +116,13 @@ const Projects = () => {
         }}
         {...resp.panHandlers}
       > 
-      {WorkData &&
-        WorkData.workCollection.items.filter(work=>work.author.includes('1')).map((work,index) => (
                   <Project
-                    key={index}
-                    title={work.title}
-                    author={work.author}
-                    image={work.image}
-                    text={work.text}
+                    title={WorkData && WorkData.workCollection.items[index].title}
+                    author={WorkData && WorkData.workCollection.items[index].author}
+                    image={WorkData && WorkData.workCollection.items[index].image}
+                    text={WorkData && WorkData.workCollection.items[index].text}
                     shouldOpen={true}
                   />
-        ))}
       </Animated.View>
       <Animated.View
         style={{
@@ -142,10 +138,10 @@ const Projects = () => {
         }}
       >
         <Project
-          title={projects[nextIndex(index)].title}
-          author={projects[nextIndex(index)].author}
-          image={projects[nextIndex(index)].image}
-          text={projects[nextIndex(index)].text}
+          title={WorkData && WorkData.workCollection.items[nextIndex(index)].title}
+          author={WorkData && WorkData.workCollection.items[nextIndex(index)].author}
+          image={WorkData && WorkData.workCollection.items[nextIndex(index)].image}
+          text={WorkData && WorkData.workCollection.items[nextIndex(index)].text}
           shouldOpen={false}
         />
       </Animated.View>
@@ -163,10 +159,10 @@ const Projects = () => {
         }}
       >
         <Project
-          title={projects[nextIndex(index + 1)].title}
-          author={projects[nextIndex(index + 1)].author}
-          image={projects[nextIndex(index + 1)].image}
-          text={projects[nextIndex(index + 1)].text}
+          title={WorkData && WorkData.workCollection.items[nextIndex(index + 1)].title}
+          author={WorkData && WorkData.workCollection.items[nextIndex(index + 1)].author}
+          image={WorkData && WorkData.workCollection.items[nextIndex(index + 1)].image}
+          text={WorkData && WorkData.workCollection.items[nextIndex(index + 1)].text}
           shouldOpen={false}
         />
       </Animated.View>
