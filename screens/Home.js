@@ -136,6 +136,7 @@ const Home = () => {
                       caption={course.caption}
                       subtitle={course.subTitle}
                       author={course.author}
+                      includeUri={false}
                     />
                   </TouchableOpacity>
                 ))}

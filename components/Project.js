@@ -78,7 +78,7 @@ const Project = ({ image, title, author, text, shouldOpen }) => {
             <Cover>
               <Image source={image} />
               <Title>{title}</Title>
-              <Author>{author}</Author>
+              {/* <Author>{author}</Author> */}
             </Cover>
             <AnimatedText style={{ height: textHeight }}>{text}</AnimatedText>
             <AnimatedLinearGradientWrapper style={{ height: textHeight }}>

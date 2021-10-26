@@ -129,7 +129,7 @@ export const LogoQuery = gql`
   }
 `;
 
-export const ProjectQuery = `
+export const ProjectQuery = gql`
 {
   projectsCollection {
     items {
@@ -147,7 +147,7 @@ export const ProjectQuery = `
   }
 }`;
 
-export const WorkQuery = `
+export const WorkQuery = gql`
 {
   workCollection {
     items {
@@ -164,6 +164,7 @@ export const WorkQuery = `
         height
       }
       text
+      title2
     }
   }
 }`;

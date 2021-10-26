@@ -1,13 +1,16 @@
 import React, { useRef, useState } from "react";
 import { Animated, PanResponder } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { vh } from "react-native-expo-viewport-units";
 import styled from "styled-components/native";
 import Project from "../components/Project";
-import { CourseQuery } from "../Queries";
+import { WorkQuery } from "../Queries";
 import { gql, useQuery, ApolloClient } from "@apollo/client";
 
 const Projects = () => {
+  const AllReducers = useSelector((state) => state);
+  const { loading: WorkLoading, data: WorkData } = useQuery(WorkQuery);
+  const dispatch = useDispatch();
   const [index, setIndex] = useState(0);
   const pan = useRef(new Animated.ValueXY()).current;
   const scale = useRef(new Animated.Value(0.9)).current;
@@ -15,8 +18,6 @@ const Projects = () => {
   const thirdScale = useRef(new Animated.Value(0.8)).current;
   const thirdTranslateY = useRef(new Animated.Value(-50)).current;
   const opacity = useRef(new Animated.Value(0)).current;
-  const AllReducers = useSelector((state) => state);
-  const { loading: WorkLoading, data: WorkData } = useQuery(WorkQuery);
   const nextIndex = (index) => {
     if (index >= projects.length - 1) {
       return 0;
@@ -114,14 +115,18 @@ const Projects = () => {
           transform: [{ translateX: pan.x }, { translateY: pan.y }],
         }}
         {...resp.panHandlers}
-      >
-        <Project
-          title={projects[index].title}
-          author={projects[index].author}
-          image={projects[index].image}
-          text={projects[index].text}
-          shouldOpen={true}
-        />
+      > 
+      {WorkData &&
+        WorkData.workCollection.items.filter(work=>work.author.includes('1')).map((work,index) => (
+                  <Project
+                    key={index}
+                    title={work.title}
+                    author={work.author}
+                    image={work.image}
+                    text={work.text}
+                    shouldOpen={true}
+                  />
+        ))}
       </Animated.View>
       <Animated.View
         style={{

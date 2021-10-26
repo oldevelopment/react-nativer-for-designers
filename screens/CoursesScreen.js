@@ -30,11 +30,11 @@ const CoursesScreen = () => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-                    {ProjectscardsData.projectscardCollection.items.map((projectcards,index) => (
+                    {ProjectscardsData && ProjectscardsData.projectscardCollection.items.map((projectcard,index) => (
                         <CourseSection
                         key={index}
-                        title={projectcards.title}
-                        image={projectcards.image}
+                        title={projectcard.title}
+                        image={projectcard.image}
                         // progress={projectcards.progress}
                       />
                     ))}
