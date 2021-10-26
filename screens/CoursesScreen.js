@@ -1,11 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { vw } from "react-native-expo-viewport-units";
+import { useDispatch, useSelector } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
 import CourseSection from "../components/CourseSection";
 import Courses from "../components/Courses";
+import { ProjectscardsQuery } from "../Queries";
+import { gql, useQuery, ApolloClient } from "@apollo/client";
 
 const CoursesScreen = () => {
+  const AllReducers = useSelector((state) => state);
+  const { loading: ProjectscardsLoading, data: ProjectscardsData } = useQuery(ProjectscardsQuery);
+  const dispatch = useDispatch();
+
   return (
     <Container>
       <ScrollView>
@@ -23,14 +30,16 @@ const CoursesScreen = () => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              {sections.map((section, index) => (
-                <CourseSection
-                  key={index}
-                  title={section.title}
-                  image={section.image}
-                  progress={section.progress}
-                />
-              ))}
+                  <ProjectscardsContainer>
+                    {ProjectscardsData.projectscardCollection.items.map((projectcards,index) => (
+                        <CourseSection
+                        key={index}
+                        title={projectcards.title}
+                        image={projectcards.image}
+                        // progress={projectcards.progress}
+                      />
+                    ))}
+                  </ProjectscardsContainer>
             </SectionScrollView>
           </Sections>
           <Author>
@@ -127,6 +136,10 @@ const Subtitle = styled.Text`
   color: #b8bece;
   margin: 20px 0 0 20px;
 `;
+
+const ProjectscardsContainer = styled.View``
+
+
 const sections = [
   {
     title: "React Native for Designers",

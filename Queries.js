@@ -32,6 +32,39 @@ export const CardsQuery = gql`
     }
   }
 `;
+export const ProjectscardsQuery = gql`
+  {
+    projectscardCollection {
+      items {
+        title
+        image {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+        subTitle
+        caption
+        logo {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+        content
+        author
+      }
+    }
+  }
+`;
 export const CourseQuery = gql`
   {
     courseCollection {
