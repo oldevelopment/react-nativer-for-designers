@@ -109,6 +109,50 @@ export const CourseQuery = gql`
     }
   }
 `;
+export const LatestQuery = gql`
+  {
+    latestCollection {
+      items {
+        title
+        subTitle
+        author
+        caption
+        image {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+
+        avatar {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+        logo {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          width
+          height
+        }
+        content
+      }
+    }
+  }
+`;
 export const LogoQuery = gql`
   {
     logoCollection {

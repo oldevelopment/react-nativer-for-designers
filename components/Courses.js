@@ -3,29 +3,29 @@ import { Text } from "react-native";
 import styled from "styled-components";
 import Course from "./Course";
 import { useDispatch, useSelector } from "react-redux";
-import { CourseQuery } from "../Queries";
+import { LatestQuery } from "../Queries";
 import { gql, useQuery, ApolloClient } from "@apollo/client";
 
 const Courses = () => {
   const AllReducers = useSelector((state) => state);
-  const { loading: CourseLoading, data: CourseData } = useQuery(CourseQuery);
+  const { loading: LatestLoading, data: LatestData } = useQuery(LatestQuery);
   const dispatch = useDispatch();
 
   return (
   <Container>
-     {CourseData &&
-        CourseData.courseCollection.items.map((course,index) => (
+     {LatestData &&
+        LatestData.latestCollection.items.map((latest,index) => (
                         <Course
                         key={index}
-                        image={course.image}
-                        title={course.title}
-                        subtitle={course.subtitle}
-                        logo={course.logo}
-                        author={course.author}
-                        avatar={course.avatar}
-                        caption={course.caption}
+                        image={latest.image}
+                        title={latest.title}
+                        subtitle={latest.subtitle}
+                        logo={latest.logo}
+                        author={latest.author}
+                        avatar={latest.avatar}
+                        caption={latest.caption}
                         includeUri={false}
-                        content={course.content}
+                        content={latest.content}
                       />
                     ))}
   </Container>
