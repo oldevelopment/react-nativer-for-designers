@@ -20,7 +20,7 @@ const CoursesScreen = () => {
           <Background source={require("../assets/background12.jpg")} />
           <LinearGradient
             colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.5)"]}
-            style={{ position: "absolute", width: 450, height: 460 }}
+            style={{ position: "absolute", width: 450, height: 0 }}
           />
           <Logo source={require("../assets/logo-react.png")} />
           <Caption>Flatline Agency</Caption>
@@ -30,7 +30,6 @@ const CoursesScreen = () => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-                  <ProjectscardsContainer>
                     {ProjectscardsData.projectscardCollection.items.map((projectcards,index) => (
                         <CourseSection
                         key={index}
@@ -39,13 +38,12 @@ const CoursesScreen = () => {
                         // progress={projectcards.progress}
                       />
                     ))}
-                  </ProjectscardsContainer>
             </SectionScrollView>
           </Sections>
-          <Author>
+          {/* <Author>
             <Avatar source={require("../assets/avatar.jpg")} />
             <Name>By Flatline Agency</Name>
-          </Author>
+          </Author> */}
         </Hero>
         <Subtitle>Latest Projects</Subtitle>
         <Courses />
@@ -63,7 +61,7 @@ const ScrollView = styled.ScrollView`
 `;
 
 const Hero = styled.View`
-  height: 460px;
+  height: 420px;
   background: #3c4560;
 `;
 
@@ -72,7 +70,7 @@ const Background = styled.Image`
   top: 0;
   left: 0;
   width: ${vw(100)}px;
-  height: 460px;
+  height: 420px;
 `;
 
 const Logo = styled.Image`
@@ -136,36 +134,5 @@ const Subtitle = styled.Text`
   color: #b8bece;
   margin: 20px 0 0 20px;
 `;
-
-const ProjectscardsContainer = styled.View``
-
-
-const sections = [
-  {
-    title: "React Native for Designers",
-    progress: 0.2,
-    image: require("../assets/background1.jpg"),
-  },
-  {
-    title: "Styled Components",
-    progress: 0.3,
-    image: require("../assets/background2.jpg"),
-  },
-  {
-    title: "Assets, Icons and SVG",
-    progress: 0.9,
-    image: require("../assets/background3.jpg"),
-  },
-  {
-    title: "Props and Data",
-    progress: 0.5,
-    image: require("../assets/background4.jpg"),
-  },
-  {
-    title: "States and Layout Animation",
-    progress: 0.1,
-    image: require("../assets/background6.jpg"),
-  },
-];
 
 export default CoursesScreen;

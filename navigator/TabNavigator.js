@@ -15,7 +15,7 @@ const HomeStack = ({ handleTabbarVisibility }) => (
   <Stack.Navigator headerMode="none">
     <Stack.Screen
       name="home"
-      component={Home}
+      component={CourseScreen}
       options={{
         tabBarLabel: "Home",
         tabBarIcon: ({ focused }) => (
@@ -75,9 +75,9 @@ export default function TabNavigator() {
 
       <Screen
         name="course"
-        component={CourseScreen}
+        component={Projects}
         options={{
-          tabBarLabel: "Courses",
+          tabBarLabel: "Work",
           tabBarVisible: tabbarvisibility,
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -90,9 +90,9 @@ export default function TabNavigator() {
       />
       <Screen
         name="projects"
-        component={Projects}
+        component={Home}
         options={{
-          tabBarLabel: "Projects",
+          tabBarLabel: "News",
           tabBarVisible: tabbarvisibility,
           tabBarIcon: ({ focused }) => (
             <Ionicons

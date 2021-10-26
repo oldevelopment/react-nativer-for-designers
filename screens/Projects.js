@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 import { vh } from "react-native-expo-viewport-units";
 import styled from "styled-components/native";
 import Project from "../components/Project";
+import { CourseQuery } from "../Queries";
+import { gql, useQuery, ApolloClient } from "@apollo/client";
+
 const Projects = () => {
   const [index, setIndex] = useState(0);
   const pan = useRef(new Animated.ValueXY()).current;
@@ -13,6 +16,7 @@ const Projects = () => {
   const thirdTranslateY = useRef(new Animated.Value(-50)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const AllReducers = useSelector((state) => state);
+  const { loading: WorkLoading, data: WorkData } = useQuery(WorkQuery);
   const nextIndex = (index) => {
     if (index >= projects.length - 1) {
       return 0;

@@ -146,3 +146,24 @@ export const ProjectQuery = `
     }
   }
 }`;
+
+export const WorkQuery = `
+{
+  workCollection {
+    items {
+      title
+      author
+      image {
+        title
+        description
+        contentType
+        fileName
+        size
+        url
+        width
+        height
+      }
+      text
+    }
+  }
+}`;
