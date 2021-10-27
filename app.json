@@ -4,7 +4,7 @@
     "slug": "Flatline-agency",
     "version": "1.0.2",
     "orientation": "default",
-    "icon": "./assets/dc-icon.png",
+    "icon": "./assets/icon.png",
     "platforms": [
       "ios",
       "android"
