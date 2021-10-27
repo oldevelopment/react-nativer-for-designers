@@ -18,4 +18,5 @@ const Image = styled.Image`
   border-radius: 22px;
   margin-left: 20px;
   margin-right: 20px;
+  margin-top: 3px;
 `;

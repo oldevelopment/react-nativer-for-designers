@@ -48,7 +48,7 @@ const Menu = () => {
       AsyncStorage.clear();
       dispatch(closeMenu());
       dispatch(updateName("Stranger"));
-      dispatch(updateAvatar(require("../assets/sad-avatar.png")));
+      dispatch(updateAvatar(require("../assets/icon.png")));
     }
   };
 

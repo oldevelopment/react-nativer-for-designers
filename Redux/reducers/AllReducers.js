@@ -1,7 +1,7 @@
 const initalState = {
   action: "",
   name: "Stranger",
-  avatar: require("../../assets/sad-avatar.png"),
+  avatar: require("../../assets/icon.png"),
 };
 
 const AllReducers = (state = initalState, action) => {

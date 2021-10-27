@@ -28,7 +28,7 @@ const Section = ({ route, handleTabbarVisibility }) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <Container>
         <Cover>
-          <PlayWrapper>
+          {/* <PlayWrapper>
             <TouchableOpacity
               underlayColor="transparent"
               onPress={() => {
@@ -39,7 +39,7 @@ const Section = ({ route, handleTabbarVisibility }) => {
                 <PlayIcon style={{ marginLeft: -10 }} />
               </PlayView>
             </TouchableOpacity>
-          </PlayWrapper>
+          </PlayWrapper> */}
           <Image source={{ uri: sectionData.image.url }} />
           <Wrapper>
             <Logo source={{ uri: sectionData.logo.url }} />

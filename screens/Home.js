@@ -22,6 +22,7 @@ import LoginModal from "../components/LoginModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NotificationButton from "../components/NotificationButton";
 import Notifications from "../components/Notifications";
+import * as Linking from 'expo-linking';
 
 const Home = () => {
   const AllReducers = useSelector((state) => state);
@@ -67,34 +68,33 @@ const Home = () => {
                 <Avatar />
               </TouchableOpacity>
               <View>
-                <Title>Welcome back,</Title>
-                <Name>{AllReducers.name}</Name>
+                <Title>Client portal</Title>
+                <Name>Flatine Agency</Name>
               </View>
-              {/* <NotificationIcon
-                style={{ position: "absolute", right: 20, top: 5 }}
-              /> */}
               <TouchableOpacity
                 onPress={handleNotif}
                 style={{ position: "absolute", right: 20, top: 5 }}
               >
-                <NotificationButton />
+                {/* <NotificationButton /> */}
               </TouchableOpacity>
             </TitleBar>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               style={{
-                paddingTop: 20,
+                paddingTop: 30,
                 paddingBottom: 20,
                 height: 110,
               }}
             >
               {LogoData &&
-                LogoData.logoCollection.items.map(({ logo, name }, index) => (
-                  <Logo key={`${name}-${index}`} image={logo.url} name={name} />
+                LogoData.logoCollection.items.map((logo, index) => (
+                  <TouchableOpacity key={`${logo.name}-${index}`} onPress={()=>{Linking.openURL(`mailto:${logo.phone}`);}}>  
+                  <Logo image={logo.logo.url} name={logo.name} />
+                  </TouchableOpacity>
                 ))}
             </ScrollView>
-            <Subtitle>Latest projects</Subtitle>
+            <Subtitle>News</Subtitle>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -119,7 +119,7 @@ const Home = () => {
                 ))}
                 
             </ScrollView>
-            <Subtitle>Popular Projects</Subtitle>
+            <Subtitle>Thinking</Subtitle>
             {CourseData &&
                 CourseData.courseCollection.items.map((course, i) => (
                   <TouchableOpacity

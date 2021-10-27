@@ -149,8 +149,8 @@ const LoginModal = () => {
             ],
           }}
         >
-          <Logo source={require("../assets/logo-dc.png")} />
-          <Text>Hehehehe you can login now</Text>
+          <Logo source={require("../assets/icon.png")} />
+          <Text>Welcome you can login now</Text>
           <InputWrappr>
             <IconContainer
               style={{ width: 24, height: 16 }}

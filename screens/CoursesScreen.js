@@ -1,17 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { vw } from "react-native-expo-viewport-units";
+import { useNavigation } from "@react-navigation/native";
+import {
+  openMenu,
+  openModal,
+  updateName,
+  updateAvatar,
+  openNotif,
+} from "../Redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
 import CourseSection from "../components/CourseSection";
 import Courses from "../components/Courses";
-import { ProjectscardsQuery } from "../Queries";
+import Course from "./../components/Course";
+import { ProjectscardsQuery, CardsQuery, CourseQuery, LogoQuery} from "../Queries";
+import Card from "./../components/Card";
 import { gql, useQuery, ApolloClient } from "@apollo/client";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const CoursesScreen = () => {
   const AllReducers = useSelector((state) => state);
   const { loading: ProjectscardsLoading, data: ProjectscardsData } = useQuery(ProjectscardsQuery);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   return (
     <Container>
@@ -22,21 +34,27 @@ const CoursesScreen = () => {
             colors={["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.5)"]}
             style={{ position: "absolute", width: 450, height: 0 }}
           />
-          <Logo source={require("../assets/logo-react.png")} />
-          <Caption>Flatline Agency</Caption>
+          <Logo source={require("../assets/Logotransparent.png")} />
+          <Caption>Digital creative agency</Caption>
           <Title>We make you Pulse</Title>
           <Sections>
             <SectionScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-                    {ProjectscardsData && ProjectscardsData.projectscardCollection.items.map((projectcard,index) => (
-                        <CourseSection
-                        key={index}
-                        title={projectcard.title}
-                        image={projectcard.image}
-                        // progress={projectcards.progress}
-                      />
+                    {ProjectscardsData 
+                      && ProjectscardsData.projectscardCollection.items.map((projectcard,index) => (
+                        <TouchableOpacity 
+                          onPress={() =>
+                          navigation.push("section", { section: projectcard })
+                        }
+                        key={`${index}${projectcard.title}`}> 
+                          <CourseSection
+                            title={projectcard.title}
+                            image={projectcard.image}
+                            // progress={projectcards.progress}
+                          /> 
+                        </TouchableOpacity>
                     ))}
             </SectionScrollView>
           </Sections>
@@ -74,11 +92,11 @@ const Background = styled.Image`
 `;
 
 const Logo = styled.Image`
-  width: 48px;
-  height: 48px;
-  margin-top: 50px;
+  width: 112px;
+  height: 50px;
+  margin-top: 70px;
   margin-left: 20px;
-  align-self: center;
+  
 `;
 
 const Caption = styled.Text`
@@ -96,7 +114,7 @@ const Title = styled.Text`
   font-weight: 600;
   margin-top: 4px;
   margin-left: 20px;
-  width: 220px;
+  width: 400px;
 `;
 
 const Sections = styled.View`
@@ -132,7 +150,7 @@ const Subtitle = styled.Text`
   text-transform: uppercase;
   font-weight: 600;
   color: #b8bece;
-  margin: 20px 0 0 20px;
+  margin: 20px 0 10px 20px;
 `;
 
 export default CoursesScreen;

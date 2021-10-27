@@ -5,9 +5,9 @@ import { NotificationIcon } from "../components/Icons";
 const NotificationButton = () => (
   <Container>
     <NotificationIcon />
-    <Bubble>
+    {/* <Bubble>
       <Text>NEW</Text>
-    </Bubble>
+    </Bubble> */}
   </Container>
 );
 
@@ -25,7 +25,7 @@ const Bubble = styled.View`
   height: 16px;
   background: #3c4560;
   position: absolute;
-  top: 38px;
+  top: 45px;
   right: 0px;
   border-radius: 8px;
   justify-content: center;

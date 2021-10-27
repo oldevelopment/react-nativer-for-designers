@@ -168,6 +168,7 @@ export const LogoQuery = gql`
           width
           height
         }
+      phone
       }
     }
   }
