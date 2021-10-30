@@ -19,12 +19,13 @@ const Projects = () => {
   const thirdTranslateY = useRef(new Animated.Value(-50)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const nextIndex = (index) => {
-    if (index >= projects.length - 1) {
+    if (index >= WorkData.workCollection.items.length - 1) {
       return 0;
     } else {
       return index + 1;
     }
   };
+
   const resp = PanResponder.create({
     onMoveShouldSetPanResponder: (e, gestureState) => {
       return (gestureState.dx === 0 && gestureState.dy === 0) ||
