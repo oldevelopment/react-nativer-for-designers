@@ -1,16 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView, View, SafeAreaView, TouchableOpacity } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import {
-  openMenu,
-  openModal,
-  updateName,
-  updateAvatar,
-  openNotif,
-} from "../Redux/actions/actions";
 import { CardsQuery, CourseQuery, LogoQuery } from "../Queries";
-import { NotificationIcon } from "./../components/Icons";
 import { useQuery } from "@apollo/client";
 import styled from "styled-components/native";
 import Card from "./../components/Card";
@@ -18,65 +9,27 @@ import Logo from "./../components/Logo";
 import Course from "./../components/Course";
 import Menu from "./../components/Menu";
 import Avatar from "../components/Avatar";
-import LoginModal from "../components/LoginModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import NotificationButton from "../components/NotificationButton";
 import Notifications from "../components/Notifications";
 import * as Linking from 'expo-linking';
 
 const Home = () => {
-  const AllReducers = useSelector((state) => state);
   const { loading: CardLoading, data: CardData } = useQuery(CardsQuery);
   const { loading: LogoLoading, data: LogoData } = useQuery(LogoQuery);
   const { loading: CourseLoading, data: CourseData } = useQuery(CourseQuery);
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
-  const handleAvatar = () => {
-    if (AllReducers.name !== "Stranger") {
-      dispatch(openMenu());
-    } else {
-      dispatch(openModal());
-    }
-  };
-  const loadState = () => {
-    AsyncStorage.getItem("state")
-      .then((serializedState) => {
-        const state = JSON.parse(serializedState);
-        if (state) {
-          dispatch(updateAvatar(require("../assets/happy-avatar.png")));
-          dispatch(updateName(state.name));
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    loadState();
-  }, []);
-  const handleNotif = () => {
-    dispatch(openNotif());
-  };
   return (
-    <>
       <Container>
         <Menu />
         <Notifications />
         <SafeAreaView>
-          <ScrollView style={{ height: "100%" }} showsHorizontalScrollIndicator={false}>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <TitleBar>
-              <TouchableOpacity onPress={handleAvatar}>
                 <Avatar />
-              </TouchableOpacity>
               <View>
                 <Title>Client portal</Title>
                 <Name>Flatine Agency</Name>
               </View>
-              <TouchableOpacity
-                onPress={handleNotif}
-                style={{ position: "absolute", right: 20, top: 5 }}
-              >
-                {/* <NotificationButton /> */}
-              </TouchableOpacity>
             </TitleBar>
             <ScrollView
               horizontal
@@ -143,8 +96,6 @@ const Home = () => {
           </ScrollView>
         </SafeAreaView>
       </Container>
-      <LoginModal />
-    </>
   );
 };
 export default Home;

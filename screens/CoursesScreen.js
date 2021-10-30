@@ -27,7 +27,7 @@ const CoursesScreen = () => {
 
   return (
     <Container>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Hero>
           <Background source={require("../assets/background12.jpg")} />
           <LinearGradient
