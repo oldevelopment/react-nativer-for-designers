@@ -2,9 +2,9 @@
   "expo": {
     "name": "Flatline Agency",
     "slug": "Flatline-agency",
-    "version": "1.0.2",
+    "version": "3.0.0",
     "orientation": "default",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
     "platforms": [
       "ios",
       "android"
@@ -24,6 +24,7 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
+      "versionCode": 3,
       "package": "com.flatlineagency.flatlineagency"
     },
     "ios": {
