@@ -27,7 +27,7 @@ const Course = ({
           <Content>
             <Avatar source={{ uri: avatar }} />
             <Caption>{caption}</Caption>
-            <Author>Taught by {author}</Author>
+            <Author>{author}</Author>
           </Content>
         </Container>
       )}
@@ -44,7 +44,7 @@ const Course = ({
           <Content>
             <Avatar source={avatar} />
             <Caption>{caption}</Caption>
-            <Author>Taught by {author}</Author>
+            <Author>{author}</Author>
           </Content>
         </Container>
       )}
